@@ -5,6 +5,8 @@
 
 template <int Coordinate, typename Type>
 struct dimension{
+    static_assert((Coordinate > 0), "Index should be > 0");
+
     constexpr dimension(Type const& val) : value{val}
     {}
 
@@ -14,6 +16,7 @@ struct dimension{
 
 template<int Coordinate, typename Type>
 auto constexpr arg(Type const& value){
+    static_assert((Coordinate > 0), "Index should be > 0");
     return dimension<Coordinate, Type>(value);
 }
 

@@ -15,6 +15,6 @@ struct repeat_template<offset_tuple<Dim, First, T ...>, 0 >{
 };
 
 template<typename T, int N>
-using make_tuple = typename repeat_template<my_tuple<T>, N-1 >::type;
+using make_tuple = typename repeat_template<offset_tuple<1, T>, N-1 >::type;
 
 //NOTE: linear complexity, can be improved

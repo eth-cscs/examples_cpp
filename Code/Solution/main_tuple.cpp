@@ -29,6 +29,7 @@ int main(){
     static_assert(c_tuple.get<1>()==-3, "error");
     static_assert(c_tuple.get<2>()==1.5, "error");
     static_assert(c_tuple.get<3>()=='b', "error");
+    //    static_assert(c_tuple.get<4>()=='b', "error");  // This trigger an error
 
     //exercice: make the following tuple compile
     my_tuple<bool, short, std::string> tuple2(arg<1>(false), arg<2>(4), arg<3>(std::string("pink pig")));

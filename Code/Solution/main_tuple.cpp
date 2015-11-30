@@ -37,8 +37,14 @@ int main(){
     //advanced exercice:
     //implement a tuple which expands the interface make_tuple<type, 5> to
     //my_tuple<type, type, type, type, type>
-    make_tuple<int, 5> new_tuple(arg<5>(6), arg<0>(1));
+    make_tuple<int, 5> new_tuple(arg<5>(66), arg<4>(55), arg<3>(44), arg<2>(33),arg<1>(22));
 
+    std::cout << new_tuple.get<1>() << " "
+              << new_tuple.get<2>() << " "
+              << new_tuple.get<3>() << " "
+              << new_tuple.get<4>() << " "
+              << new_tuple.get<5>() << " "
+              << std::endl;
     //very advanced exercice (probably not a good idea):
     //implement an interface which mixes run-time and compile-time compmnents in an offset-tuple
     //using tuple_t = offset_tuple<int, 5>

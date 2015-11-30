@@ -58,7 +58,7 @@ struct offset_tuple<NDim, First, Types ...> : public offset_tuple<NDim, Types ..
 
     template<int Idx>
     constexpr auto get() const {
-        return NDim-Idx==n_args-1? m_offset : super::template get<Idx>();
+        return static_if<NDim-Idx==n_args-1>::apply(m_offset, super::template get<Idx>());
     }
 
     protected:
@@ -78,7 +78,7 @@ struct offset_tuple<NDim>
 
     //never called
     template<int Idx>
-    constexpr int get() const { return 0;}
+    constexpr int get() const { static_assert((Idx<=n_dim), "offset_tuple out of bound access"); return 0; }
 };
 
 template<typename ... T>

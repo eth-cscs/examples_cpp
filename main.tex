@@ -1,0 +1,81 @@
+\documentclass{beamer}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{decorations.pathmorphing}
+
+\setbeamersize{text margin left=10pt,text margin right=10pt}
+%\usetheme{Dresden}
+\lstdefinestyle{base}{
+  language=c++,
+%  emptylines=1,
+%  breaklines=true,
+%  basicstyle=\ttfamily\color{black},
+  moredelim=**[is][\color{red}]{@}{@},
+  moredelim=**[is][\color{blue}]{~}{~},
+}
+\title{GridTools Example Implementation}
+\author{}
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\section{Storage Info Example}
+\begin{frame}[fragile]
+  \frametitle{Storage Info Example}
+  we access a storage using meta-information, i.e. strides, data layout, indices
+
+  Optimizations:
+  \begin{itemize}
+  \item This information might be shared among several storages;
+  \item Sometimes can be compile-time information;
+  \end{itemize}
+
+  Solution: described in the example \verb1main_storage.cpp1
+  \begin{itemize}
+  \item create a generic \verb1storage_info1 class containing the meta-information;
+  \item constant expression when needed (strides and index computations happen at compile-time)
+  \item shared among several storage instances
+  \item we will generalize the storage layout with a \verb1layout_map1 object
+  \end{itemize}
+\end{frame}
+
+\section{Tuple Example}
+\begin{frame}[fragile]
+\frametitle{Tuple Example}
+  we need a tuple of objects and we want to initialize only some of them, in arbitrary order,
+  with a specific interface
+  {\footnotesize
+  \begin{lstlisting}[style=base]
+    my_tuple<int, double, std::string>(arg<3>("ciao")
+                                       , arg<1>(4))
+  \end{lstlisting}
+  }
+  Problems:
+  \begin{itemize}
+    \item we want the tuple to be a constant expression when necessary
+    \item need to generalize the implementation to generic data types
+    \item need to implement a simpler interface when the tuple is actually a set of objecs of the same type,
+      i.e.
+      {\footnotesize
+      \begin{lstlisting}[style=base]
+          make_tuple<int, 5>(arg<3>(8))
+      \end{lstlisting}
+      }
+        is
+        {\footnotesize
+        \begin{lstlisting}[style=base]
+          my_tuple<int, int, int, int, int>(arg<3>(8))
+        \end{lstlisting}
+        }
+
+  \end{itemize}
+
+  Solution: in example \verb1main_tuple.cpp1
+\end{frame}
+\end{document}

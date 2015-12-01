@@ -3,6 +3,7 @@
 //solution to exercice 1
 #include "static_if.hpp"
 
+namespace detail_ {
 template <int Index, typename Type>
 struct position{
     static_assert((Index > 0), "Index should be > 0");
@@ -13,12 +14,6 @@ struct position{
     static const int index=Index;
     Type value;
 };
-
-template<int Index, typename Type>
-auto constexpr pos(Type const& value){
-    static_assert((Index > 0), "Index should be > 0");
-    return position<Index, Type>(value);
-}
 
 template <int N, typename X>
 constexpr auto initialize( X x )
@@ -83,6 +78,13 @@ struct sized_value_tuple<NDim>
     template<int Idx>
     constexpr int get() const { static_assert((Idx<=n_dim), "sized_value_tuple out of bound access"); return 0; }
 };
+} //namespace detail_
+
+template<int Index, typename Type>
+auto constexpr pos(Type const& value){
+    static_assert((Index > 0), "Index should be > 0");
+    return detail_::position<Index, Type>(value);
+}
 
 template<typename ... T>
-using value_tuple=sized_value_tuple<sizeof...(T), T...>;
+using value_tuple=detail_::sized_value_tuple<sizeof...(T), T...>;

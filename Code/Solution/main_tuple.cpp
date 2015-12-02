@@ -29,6 +29,9 @@ int main(){
 
     //compile-time instance
     constexpr my_tuple<int, double, char> c_tuple(arg<3>('b'), arg<1>(-3), arg<2>(1.5));
+
+    tuple.set<1>(true);
+
     static_assert(c_tuple.get<1>()==-3, "error");
     static_assert(c_tuple.get<2>()==1.5, "error");
     static_assert(c_tuple.get<3>()=='b', "error");

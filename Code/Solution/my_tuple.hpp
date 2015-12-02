@@ -21,7 +21,7 @@ auto constexpr arg(Type const& value){
 }
 
 template <int N, typename X>
-constexpr decltype(auto) initialize( X const& x )
+constexpr auto initialize( X const& x )
 {
     //note: the ? construct does not allow x.value and 0 to have different types
     //This prevents us from defining a generic tuple. How would you solve this problem?
@@ -33,7 +33,7 @@ constexpr decltype(auto) initialize( X const& x )
 }
 
 template <int N, typename X, typename ... Rest>
-constexpr decltype(auto) initialize(X const& x, Rest const& ... rest )
+constexpr auto initialize(X const& x, Rest const& ... rest )
 {
     //note: the ? construct does not allow x.value and initialize<N>(rest...) to have different types
     //This prevents us from defining a generic tuple. How would you solve this problem?
@@ -59,10 +59,23 @@ struct offset_tuple<NDim, First, Types ...> : public offset_tuple<NDim, Types ..
         super( t, x... ), m_offset(initialize<n_dim-n_args+1>(t, x...)) {
     }
 
+    template <int Idx, typename Type, typename... GenericElements>
+    constexpr offset_tuple ( dimension<Idx, Type> & t, GenericElements & ... x):
+        super( t, x... ), m_offset(initialize<n_dim-n_args+1>(t, x...)) {
+    }
+
     template<int Idx>
-    constexpr decltype(auto) get() const {
+    constexpr auto get() const {
         static_assert(Idx <= NDim, "error");
         return static_if<NDim-Idx==n_args-1>::apply( m_offset , super::template get<Idx>());
+    }
+
+    template<int Idx, typename T>
+    void set(T const& arg) {
+         if(NDim-Idx==n_args-1)
+             m_offset = arg;
+         else
+             super::template set<Idx>(arg);
     }
 
     protected:
@@ -82,9 +95,19 @@ struct offset_tuple<NDim, First>
         m_offset(initialize<n_dim-n_args+1>(t, x...) ) {
     }
 
+    template <int Idx, typename Type, typename... GenericElements>
+    constexpr offset_tuple ( dimension<Idx, Type> & t, GenericElements & ... x):
+        m_offset(initialize<n_dim-n_args+1>(t, x...) ) {
+    }
+
     template<int Idx>
-    constexpr decltype(auto) get() const {
+    constexpr auto get() const {
         return m_offset;
+    }
+
+    template<int Idx, typename T>
+    void set(T const& arg) {
+        m_offset=arg;
     }
 
 protected:

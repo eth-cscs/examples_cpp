@@ -21,7 +21,7 @@ auto constexpr arg(Type const& value){
 }
 
 template <int N, typename X>
-constexpr auto initialize( X x )
+constexpr decltype(auto) initialize( X const& x )
 {
     //note: the ? construct does not allow x.value and 0 to have different types
     //This prevents us from defining a generic tuple. How would you solve this problem?
@@ -33,7 +33,7 @@ constexpr auto initialize( X x )
 }
 
 template <int N, typename X, typename ... Rest>
-constexpr auto initialize(X x, Rest ... rest )
+constexpr decltype(auto) initialize(X const& x, Rest const& ... rest )
 {
     //note: the ? construct does not allow x.value and initialize<N>(rest...) to have different types
     //This prevents us from defining a generic tuple. How would you solve this problem?
@@ -60,8 +60,9 @@ struct offset_tuple<NDim, First, Types ...> : public offset_tuple<NDim, Types ..
     }
 
     template<int Idx>
-    constexpr auto get() const {
-        return static_if<NDim-Idx==n_args-1>::apply(m_offset, super::template get<Idx>());
+    constexpr decltype(auto) get() const {
+        static_assert(Idx <= NDim, "error");
+        return static_if<NDim-Idx==n_args-1>::apply( m_offset , super::template get<Idx>());
     }
 
     protected:
@@ -69,19 +70,26 @@ struct offset_tuple<NDim, First, Types ...> : public offset_tuple<NDim, Types ..
 };
 
 //recursion anchor
-template< int NDim >
-struct offset_tuple<NDim>
+template< int NDim, typename First >
+struct offset_tuple<NDim, First>
 {
     static const int n_dim=NDim;
 
-    template <typename... GenericElements>
-    constexpr offset_tuple ( GenericElements... x) {}
+    static const int n_args=1;
 
-    static const int n_args=0;
+    template <int Idx, typename Type, typename... GenericElements>
+    constexpr offset_tuple ( dimension<Idx, Type> const& t, GenericElements const& ... x):
+        m_offset(initialize<n_dim-n_args+1>(t, x...) ) {
+    }
 
-    //never called
     template<int Idx>
-    constexpr int get() const { static_assert((Idx<=n_dim), "offset_tuple out of bound access"); return 0; }
+    constexpr decltype(auto) get() const {
+        return m_offset;
+    }
+
+protected:
+    First m_offset;
+
 };
 
 template<typename ... T>

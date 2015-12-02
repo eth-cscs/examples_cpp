@@ -40,6 +40,8 @@ int main(){
     //exercice: make the following tuple compile
     my_tuple<bool, short, std::string> tuple2(arg<1>(false), arg<2>(4), arg<3>(std::string("pink pig")));
 
+    tuple2.set<3>(std::string("black dog"));
+
     //advanced exercice:
     //implement a tuple which expands the interface make_tuple<type, 5> to
     //my_tuple<type, type, type, type, type>

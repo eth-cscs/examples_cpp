@@ -1,5 +1,5 @@
 #pragma once
-
+#include <type_traits>
 //solution to exercice 1
 #include "static_if.hpp"
 
@@ -46,6 +46,18 @@ constexpr auto initialize(X const& x, Rest const& ... rest )
 template<int NDim, typename ... Types >
 struct offset_tuple;
 
+
+template<typename T, int Idx>
+struct access{
+    using type = typename std::conditional<Idx==1, T, typename access<typename T::super, Idx-1>::type >::type;
+};
+
+template<typename T>
+struct access<T, 1>{
+    using type = T;
+};
+
+
 template<int NDim, typename First, typename ... Types >
 struct offset_tuple<NDim, First, Types ...> : public offset_tuple<NDim, Types ...>
 {
@@ -71,11 +83,9 @@ struct offset_tuple<NDim, First, Types ...> : public offset_tuple<NDim, Types ..
     }
 
     template<int Idx, typename T>
-    void set(T const& arg) {
-         if(NDim-Idx==n_args-1)
-             m_offset = arg;
-         else
-             super::template set<Idx>(arg);
+    void set(T const& arg_) {
+
+        access<offset_tuple,Idx>::type::m_offset = arg_;
     }
 
     protected:
@@ -106,8 +116,8 @@ struct offset_tuple<NDim, First>
     }
 
     template<int Idx, typename T>
-    void set(T const& arg) {
-        m_offset=arg;
+    void set(T const& arg_) {
+        m_offset=arg_;
     }
 
 protected:

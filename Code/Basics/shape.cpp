@@ -461,7 +461,7 @@ int main() {
 
     std::cout << ShapeInsert<shape, 52>::type() << std::endl;
 
-    std::cout << AnalyzeShape<double**[][666]>::shape() << std::endl;
+    std::cout << AnalyzeShape<char**[][1][666]>::shape() << std::endl;
 
     return 0;
 }

@@ -51,7 +51,9 @@ struct C {
        my_traits could have been used if the to_string function
        was defined. But std::to_string cannod be specialized for
        user types in the namespace std. A using statement may solve
-       this but I would not judge that clean. */
+       this but I would not judge that clean.
+       http://en.cppreference.com/w/cpp/language/extending_std
+    */
 
     complex_t c_value;
 

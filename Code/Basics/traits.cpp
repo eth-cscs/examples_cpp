@@ -1,6 +1,8 @@
 #include <iostream>
 
-
+/**
+   Classes A and B are two user classes that implements a given interface.
+ */
 template <typename ValueType>
 struct A {
     using value_type = ValueType;
@@ -17,6 +19,10 @@ struct B {
     B(std::string && v) : value(std::move(v)) {}
 };
 
+/**
+   A traits class is a class template that contains informations on how to manipulate
+   objects of the types for which the traits are meaningful.
+ */
 template <typename T>
 struct my_traits {
 
@@ -32,6 +38,11 @@ struct my_traits {
     }
 };
 
+
+/**
+   The print function will take a list of objects for which the traits are valid
+   and print something accorgingly.
+ */
 void print( ) {
     std::cout << "." << std::endl;
 }

@@ -17,19 +17,6 @@ struct B {
     B(std::string && v) : value(std::move(v)) {}
 };
 
-template <bool UseCurly=true>
-struct C {
-
-    struct complex_t {
-        float a;
-        float b;
-    };
-
-    complex_t c_value;
-
-    C(float a, float b) : c_value{a,b} {}
-};
-
 
 template <typename T>
 struct my_traits {
@@ -46,6 +33,35 @@ struct my_traits {
     }
 };
 
+/**
+   This is a third party class thatwe want to use with our
+   print function. We can then define a specialization of the trairs.
+ */
+template <bool UseCurly=true>
+struct C {
+
+    using use_curly = UseCurly;
+
+    struct complex_t {
+        float a;
+        float b;
+    };
+
+    /* If c_value was called value, then the primary template
+       my_traits could have been used if the to_string function
+       was defined. But std::to_string cannod be specialized for
+       user types in the namespace std. A using statement may solve
+       this but I would not judge that clean. */
+
+    complex_t c_value;
+
+    C(float a, float b) : c_value{a,b} {}
+};
+
+/**
+   This is a specialization of the traits for the new class C
+   that comes from some other software.
+ */
 template <bool UseCurl>
 struct my_traits<C<UseCurl>> {
 

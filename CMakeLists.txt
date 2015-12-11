@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.0.0 )
+cmake_minimum_required( VERSION 2.8.10 )
 set(CMAKE_LEGACY_CYGWIN_WIN32 0)
 
 project( CPPEXAMPLES )
@@ -7,7 +7,7 @@ enable_language( CXX )
 set (ADDITIONAL_CXX_FLAGS "-std=c++14")
 set(EXECUTABLE_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH} "${CMAKE_BINARY_DIR}/build")
 
-list(APPEND SRCFILES ./Code/Solution/main_storage.cpp ./Code/Solution/main_tuple.cpp ./Code/Traits/traits.cpp ./Code/Traits/traits1.cpp ./Code/Partial_Specialization/partial.cpp ./Code/Partial_Specialization/partial_protected.cpp ./Code/Partial_Specialization/shape.cpp Code/CRTP/crtp.cpp Code/CRTP/crtp_robust.cpp)
+list(APPEND SRCFILES ./Code/Solution/main_storage.cpp ./Code/Solution/main_tuple.cpp ./Code/Solution/main_integer_tuple.cpp ./Code/Traits/traits.cpp ./Code/Traits/traits1.cpp ./Code/Partial_Specialization/partial.cpp ./Code/Partial_Specialization/partial_protected.cpp ./Code/Partial_Specialization/shape.cpp Code/CRTP/crtp.cpp Code/CRTP/crtp_robust.cpp)
 
 
 

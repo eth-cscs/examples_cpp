@@ -18,18 +18,39 @@
 #include <iostream>
 #include <string>
 
+struct pi {
+    double value;
+
+    pi()
+        : value{3.1415926}
+    {}
+};
+
+std::ostream& operator<<(std::ostream& s, pi p) {
+    return s << p.value;
+}
+
 int main(){
 
     //run-time instance
-    volatile double mut_val=3.1415926;
+    volatile double mut_val=-3.1415926;
 
-    value_tuple<bool, char, double, int> tuple(pos<1>(false), pos<3>(mut_val), pos<2>('m'));
+    value_tuple<bool, char, double, int, pi> tuple(pos<1>(false),
+                                               pos<3>(mut_val),
+                                               pos<2>('m'));
     std::cout << tuple.get<1>() << " "
               << tuple.get<2>() << " "
               << tuple.get<3>() << " "
               << tuple.get<4>() << " "
+              << tuple.get<5>() << " "
               << std::endl;
 
+    value_tuple<bool, char, double, pi> default_tuple;
+    std::cout << default_tuple.get<1>() << " "
+              << default_tuple.get<2>() << " "
+              << default_tuple.get<3>() << " "
+              << default_tuple.get<4>() << " "
+              << std::endl;
 
 
     constexpr value_tuple<bool, char, double, int> ctuple(pos<1>(false), pos<3>(3.14), pos<2>('m'));
@@ -56,6 +77,8 @@ int main(){
     //using tuple_t = offset_tuple<int, 5>
     //using alias<pos<1>, 5> = new_tuple_t;
     //new_tuple_t(pos<4>(3));
+
+    value_tuple<bool, short, std::string> tuple2(pos<1>(false), pos<2>(4), pos<3>(std::string("pink pig")));
 
     return 0;
 

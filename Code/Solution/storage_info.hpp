@@ -4,6 +4,8 @@
 //storage meta information
 template <int Size>
 struct storage_info{
+    storage_info() = delete;
+
     template <typename ... Ints>
     constexpr storage_info(int first_, Ints ... dims_) :
         m_dims{first_, dims_ ...}
@@ -36,7 +38,6 @@ struct storage_info{
 
 private:
     int m_dims[Size];
-    constexpr storage_info(){}
 };
 
 //exercise: generalization, create a layout map

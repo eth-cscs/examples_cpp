@@ -40,8 +40,6 @@ struct my_traits {
 template <bool UseCurly=true>
 struct C {
 
-    using use_curly = UseCurly;
-
     struct complex_t {
         float a;
         float b;

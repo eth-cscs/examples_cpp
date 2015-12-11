@@ -21,22 +21,24 @@
 int main(){
 
     //run-time instance
-    volatile double mut_val=13;
+    volatile double mut_val=3.1415926;
 
-    value_tuple<bool, short, double> tuple(pos<1>(false), pos<2>(4), pos<3>(mut_val));
+    value_tuple<bool, char, double, int> tuple(pos<1>(false), pos<3>(mut_val), pos<2>('m'));
+    std::cout << tuple.get<1>() << " "
+              << tuple.get<2>() << " "
+              << tuple.get<3>() << " "
+              << tuple.get<4>() << " "
+              << std::endl;
 
-    //compile-time instance
-    constexpr my_tuple<int, double, char> c_tuple(arg<3>('b'), arg<1>(-3), arg<2>(1.5));
 
-    static_assert(c_tuple.get<1>()==-3, "error");
-    static_assert(c_tuple.get<2>()==1.5, "error");
-    static_assert(c_tuple.get<3>()=='b', "error");
+
+    constexpr value_tuple<bool, char, double, int> ctuple(pos<1>(false), pos<3>(3.14), pos<2>('m'));
+    static_assert(ctuple.get<1>()==false, "error");
+    static_assert(ctuple.get<2>()=='m', "error");
+    static_assert(ctuple.get<3>()==3.14, "error");
+    static_assert(ctuple.get<4>()==int(), "error");
     //    static_assert(c_tuple.get<4>()=='b', "error");  // This trigger an error
 
-    //exercice: make the following tuple compile
-    value_tuple<bool, short, std::string> tuple2(pos<1>(false), pos<2>(4), pos<3>(std::string("pink pig")));
-
-    tuple2.set<3>(std::string("black dog"));
 
     //advanced exercice:
     //implement a tuple which expands the interface make_tuple<type, 5> to

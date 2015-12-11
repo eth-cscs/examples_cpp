@@ -25,7 +25,7 @@ public:
     template <typename T>
     T process2(T const& v) {
         ++count_process2;
-        derived().process2_impl(v);
+        Derived::process2_impl(v);
     }
 
     void stats() const {
@@ -45,13 +45,17 @@ public:
         for (auto it : s) {
             out += std::toupper(it);
         }
+
+        return out;
     }
 
-    std::string process2_impl(std::string const& s) const {
+    static std::string process2_impl(std::string const& s) {
         std::string out;
         for (auto it : s) {
             out += std::tolower(it);
         }
+
+        return out;
     }
 };
 

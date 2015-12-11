@@ -5,12 +5,9 @@
 namespace runtime {
     class base {
 
-        std::string m_name;
         int m_count;
     public:
-        base(std::string n) : m_name(n), m_count(0) {}
-
-        std::string const& name() const {return m_name;}
+        base() : m_count(0) {}
 
         virtual void print_me() const = 0;
 
@@ -22,21 +19,20 @@ namespace runtime {
 
         int m_value;
     public:
-        derived_i(std::string n, int v)
-            : base(n)
+        derived_i(int v)
+            : base()
             , m_value(v)
         {}
 
         virtual void print_me() const {
             std::cout << "Derived >"
-                      <<  name()
                       << "< value: "
                       << m_value
                       << std::endl;
         }
 
         virtual void inc() {
-            ++m_value;
+            m_value=m_value*m_value/100000;
         }
     };
 
@@ -45,15 +41,14 @@ namespace runtime {
 
         double m_a, m_b;
     public:
-        derived_c(std::string n, float a, float b)
-            : base(n)
+        derived_c(float a, float b)
+            : base()
             , m_a(a)
             , m_b(b)
         {}
 
         virtual void print_me() const {
             std::cout << "Derived >"
-                      <<  name()
                       << "< value: ("
                       << m_a << " + i" << m_b << ")"
                       << std::endl;
@@ -82,11 +77,9 @@ namespace compiletime {
     template <typename Derived>
     class base {
 
-        std::string m_name;
     public:
-        base(std::string n) : m_name(n) {}
-
-        std::string const& name() const {return m_name;}
+        base()
+        {}
 
         void print_me() const {
             static_cast<Derived*>(this)->print_me();
@@ -102,21 +95,20 @@ namespace compiletime {
 
         int m_value;
     public:
-        derived_i(std::string n, int v)
-            : base_type(n)
+        derived_i(int v)
+            : base_type()
             , m_value(v)
         {}
 
-        virtual void print_me() const {
+        void print_me() const {
             std::cout << "Derived >"
-                      << base_type::name()
                       << "< value: "
                       << m_value
                       << std::endl;
         }
 
-        virtual void inc() {
-            ++m_value;
+        void inc() {
+            m_value=m_value*m_value/100000;
         }
     };
 
@@ -125,21 +117,20 @@ namespace compiletime {
 
         double m_a, m_b;
     public:
-        derived_c(std::string n, float a, float b)
-            : base_type(n)
+        derived_c(float a, float b)
+            : base_type()
             , m_a(a)
             , m_b(b)
         {}
 
-        virtual void print_me() const {
+        void print_me() const {
             std::cout << "Derived >"
-                      <<  name()
                       << "< value: ("
                       << m_a << " + i" << m_b << ")"
                       << std::endl;
         }
 
-        virtual void inc() {
+        void inc() {
             m_a = m_a + 1;
             m_b = m_b + 1;
         }
@@ -163,8 +154,22 @@ namespace compiletime {
 int main(int argc, char** argv) {
 
     const int N = atoi(argv[1]);
+
+
     {
-        compiletime::derived_i d("derived_i compiletime", 666);
+        compiletime::derived_c c(1.0, 2.0);
+
+        c.print_me();
+
+        compiletime::run(c, N);
+
+        c.print_me();
+    }
+
+    std::cout << std::endl;
+
+    {
+        compiletime::derived_i d( 666);
 
         d.print_me();
 
@@ -176,42 +181,21 @@ int main(int argc, char** argv) {
 
     std::cout << std::endl;
 
-    {
-        compiletime::derived_c c("derived_c compiletime", 1.0, 2.0);
-
-        c.print_me();
-
-        compiletime::run(c, N);
-
-        c.print_me();
-    }
-
-    std::cout << std::endl;
-
 
     {
-        runtime::derived_c c("derived_c runtime", 1.0, 2.0);
+        runtime::base* c;
+        const int Cond = atoi(argv[2]);
+        if(Cond==0)
+            c = new runtime::derived_c( 1.0, 2.0 );
+        else
+            c = new runtime::derived_i( 666 );
 
-        c.print_me();
+        c->print_me();
 
-        runtime::run(c, N);
+        runtime::run(*c, N);
 
-        c.print_me();
+        c->print_me();
     }
-
-    std::cout << std::endl;
-
-
-    {
-        runtime::derived_i d("derived_i runtime", 666);
-
-        d.print_me();
-
-        runtime::run(d, N);
-
-        d.print_me();
-    }
-
 
     std::cout << std::endl;
 

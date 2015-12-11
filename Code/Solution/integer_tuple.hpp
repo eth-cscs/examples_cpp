@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 //solution to exercice 1
 #include "static_if.hpp"
 

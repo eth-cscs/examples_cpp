@@ -60,7 +60,8 @@ namespace detail_ {
         static const int n_dim=NDim;
 
         typedef sized_value_tuple<NDim, Types ...> super;
-        static const int n_args=sizeof...(Types)+1;
+
+        static const int s_index=NDim - sizeof...(Types);
 
         template <int Limit>
         static constexpr bool check_bounds() {
@@ -77,7 +78,7 @@ namespace detail_ {
         constexpr sized_value_tuple ( position<Idx, Type> const& t,
                                       GenericElements const& ... x):
             super( t, x... ),
-            m_offset(initialize<n_dim-n_args+1, First>(t, x...))
+            m_offset(initialize<s_index, First>(t, x...))
         {
             static_assert(check_bounds<n_dim,
                           position<Idx, Type>,
@@ -87,12 +88,12 @@ namespace detail_ {
 
         constexpr sized_value_tuple ():
             super(),
-            m_offset(initialize<n_dim-n_args+1, First>())
+            m_offset(initialize<s_index, First>())
         { }
 
         template<int Idx>
         constexpr auto get() const {
-            return static_if<NDim-Idx==n_args-1>
+            return static_if<Idx==s_index>
                 ::apply(m_offset, super::template get<Idx>());
         }
 
@@ -111,7 +112,7 @@ namespace detail_ {
 
         constexpr sized_value_tuple ( ) {}
 
-        static const int n_args=0;
+        static const int s_index=NDim+1;
 
         //never called
         template<int Idx>

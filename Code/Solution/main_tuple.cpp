@@ -80,6 +80,11 @@ int main(){
 
     value_tuple<bool, short, std::string> tuple2(pos<1>(false), pos<2>(4), pos<3>(std::string("pink pig")));
 
+    std::cout << tuple2.get<1>() << " "
+              << tuple2.get<2>() << " "
+              << tuple2.get<3>() << " "
+              << std::endl;
+
     return 0;
 
 }

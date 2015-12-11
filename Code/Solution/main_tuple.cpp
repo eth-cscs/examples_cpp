@@ -22,10 +22,12 @@ int main(){
 
     //run-time instance
     volatile double mut_val=13;
+
     value_tuple<bool, short, double> tuple(pos<1>(false), pos<2>(4), pos<3>(mut_val));
 
     //compile-time instance
-    constexpr value_tuple<int, double, char> c_tuple(pos<3>('b'), pos<1>(-3), pos<2>(1.5));
+    constexpr my_tuple<int, double, char> c_tuple(arg<3>('b'), arg<1>(-3), arg<2>(1.5));
+
     static_assert(c_tuple.get<1>()==-3, "error");
     static_assert(c_tuple.get<2>()==1.5, "error");
     static_assert(c_tuple.get<3>()=='b', "error");
@@ -33,6 +35,8 @@ int main(){
 
     //exercice: make the following tuple compile
     value_tuple<bool, short, std::string> tuple2(pos<1>(false), pos<2>(4), pos<3>(std::string("pink pig")));
+
+    tuple2.set<3>(std::string("black dog"));
 
     //advanced exercice:
     //implement a tuple which expands the interface make_tuple<type, 5> to
@@ -46,7 +50,7 @@ int main(){
               << new_tuple.get<5>() << " "
               << std::endl;
     //very advanced exercice (probably not a good idea):
-    //implement an interface which mixes run-time and compile-time compmnents in an offset-tuple
+    //implement an interface which mixes run-time and compile-time components in an offset-tuple
     //using tuple_t = offset_tuple<int, 5>
     //using alias<pos<1>, 5> = new_tuple_t;
     //new_tuple_t(pos<4>(3));

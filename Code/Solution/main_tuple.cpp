@@ -22,7 +22,11 @@ struct pi {
     double value;
 
     pi()
-        : value{3.1415926}
+        : value{3.1415926/4.0}
+    {}
+
+    pi(int n)
+        : value(3.1415926/4.0*n)
     {}
 };
 
@@ -77,14 +81,5 @@ int main(){
     //using tuple_t = offset_tuple<int, 5>
     //using alias<pos<1>, 5> = new_tuple_t;
     //new_tuple_t(pos<4>(3));
-
-    value_tuple<bool, short, std::string> tuple2(pos<1>(false), pos<2>(4), pos<3>(std::string("pink pig")));
-
-    std::cout << tuple2.get<1>() << " "
-              << tuple2.get<2>() << " "
-              << tuple2.get<3>() << " "
-              << std::endl;
-
-    return 0;
 
 }

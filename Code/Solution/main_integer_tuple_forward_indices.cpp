@@ -42,7 +42,4 @@ int main(){
     static_assert(ctuple.get<4>()==int(), "error");
     //    static_assert(c_tuple.get<4>()=='b', "error");  // This trigger an error
 
-
-    return 0;
-
 }

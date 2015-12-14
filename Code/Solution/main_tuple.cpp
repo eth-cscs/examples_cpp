@@ -19,19 +19,23 @@
 #include <string>
 
 struct pi {
-    double value;
+    double m_value;
 
     pi()
-        : value{3.1415926/4.0}
+        : m_value{3.1415926/4.0}
     {}
 
     pi(int n)
-        : value(3.1415926/4.0*n)
+        : m_value(3.1415926/4.0*n)
     {}
+
+    operator double() const {
+        return m_value;
+    }
 };
 
 std::ostream& operator<<(std::ostream& s, pi p) {
-    return s << p.value;
+    return s << static_cast<double>(p);
 }
 
 int main(){

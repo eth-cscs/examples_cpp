@@ -96,5 +96,4 @@ int main() {
 
     print(A<int>(2), B("ciao"), A<double>(3.1415926), B("this is it"));
 
-    return 0;
 }

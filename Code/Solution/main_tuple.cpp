@@ -17,6 +17,7 @@
 
 //solution to exercice 3
 #include "value_tuple_mixed.hpp"
+#include "integer_tuple_mixed.hpp"
 
 #include <iostream>
 #include <string>
@@ -24,11 +25,11 @@
 struct pi {
     double value;
 
-    pi()
+    constexpr pi()
         : value{3.1415926/4.0}
     {}
 
-    pi(int n)
+    constexpr pi(int n)
         : value(3.1415926/4.0*n)
     {}
 };
@@ -42,6 +43,8 @@ struct pair{
     static constexpr short first=T;
     static constexpr short second=U;
 };
+
+extern constexpr value_tuple<int, char, pi> const c_tuple_(pos<1>(3), pos<3>(10));
 
 int main(){
 
@@ -97,8 +100,14 @@ int main(){
     //using alias<pos<1>, 5> = new_tuple_t;
     //new_tuple_t(pos<4>(3));
 
-    detail_::value_tuple_mixed< make_value_tuple<int,4>, pair<5, 44> > tmp;
+    detail_::integer_tuple_mixed< make_value_tuple<int,4>, pair<5, 44> > tmp;
 
     static_assert(detail_::get<5>(tmp)==44, "error");
-    //static_assert(tmp.get<5>()==44, "error");
+    static_assert(tmp.get<5>()==44, "error");
+
+
+    //the interface for generic tuple (not only integers) becomes a bit cumbersome
+    detail_::value_tuple_mixed< make_value_tuple<int,4>, const value_tuple<int, char, pi>, c_tuple_> tmp2;
+
+    static_assert(tmp2.get<3>().value==pi(10).value, "error");
 }

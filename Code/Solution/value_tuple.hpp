@@ -124,6 +124,12 @@ namespace detail_ {
             access<sized_value_tuple,Idx>::type::m_offset = arg_;
         }
 
+        template<int Idx>
+        constexpr bool is_present() const {
+            return static_if<Idx==s_index>::
+                apply(true, super::template is_present<Idx>());
+        }
+
     protected:
         First m_offset;
     };
@@ -152,6 +158,8 @@ namespace detail_ {
         void set(T const& arg_) {
         }
 
+        template<int Idx>
+        constexpr bool is_present() const {return false;}
     };
 } //namespace detail_
 

@@ -69,6 +69,13 @@ int main(){
     //    static_assert(c_tuple.get<4>()=='b', "error");  // This trigger an error
 
 
+    //exercice: make the following tuple compile
+    value_tuple<bool, short, std::string> tuple2(pos<1>(false), pos<2>(4), pos<3>(std::string("pink pig")));
+
+    tuple2.set<3>(std::string("black dog"));
+
+
+    std::cout<<tuple2.get<3>()<<std::endl;
     //advanced exercice:
     //implement a tuple which expands the interface make_tuple<type, 5> to
     //value_tuple<type, type, type, type, type>

@@ -9,7 +9,7 @@ namespace detail_ {
         static_assert((Index > 0), "Index should be > 0");
         using value_type = Type;
 
-        constexpr position(Type val) : value{val}
+        constexpr position(Type const& val) : value{val}
         {}
 
         static const int index=Index;
@@ -23,7 +23,7 @@ namespace detail_ {
     }
 
     template <int N, typename First, typename X>
-    constexpr auto initialize( X x )
+    constexpr auto initialize( X const& x )
     {
         //note: the ? construct does not allow x.value and 0 to have
         //different types
@@ -37,7 +37,7 @@ namespace detail_ {
     }
 
     template <int N, typename First, typename X, typename ... Rest>
-    constexpr auto initialize(X x, Rest ... rest )
+    constexpr auto initialize(X const& x, Rest const& ... rest )
     {
         //note: the ? construct does not allow x.value and
         //initialize<N>(rest...) to have different types This prevents
@@ -49,6 +49,18 @@ namespace detail_ {
         return static_if<X::index==N>::apply( x.value, initialize<N, First>(rest...));
     }
 
+
+    template<typename T, int Idx>
+    struct access{
+        using type = typename std::conditional<Idx==1, T, typename access<typename T::super, Idx-1>::type >::type;
+    };
+
+    template<typename T>
+    struct access<T, 1>{
+        using type = T;
+    };
+
+
     template<int NDim, typename ... Types >
     struct sized_value_tuple;
 
@@ -56,10 +68,12 @@ namespace detail_ {
     struct sized_value_tuple<NDim, First, Types ...>
         : public sized_value_tuple<NDim, Types ...>
     {
-    private:
+    public:
         static const int n_dim=NDim;
 
         typedef sized_value_tuple<NDim, Types ...> super;
+
+    private:
 
         static const int s_index=NDim - sizeof...(Types);
 
@@ -75,8 +89,8 @@ namespace detail_ {
 
     public:
         template <int Idx, typename Type, typename... GenericElements>
-        constexpr sized_value_tuple ( position<Idx, Type> const& t,
-                                      GenericElements const& ... x):
+        constexpr sized_value_tuple ( position<Idx, Type> & t,
+                                      GenericElements & ... x):
             super( t, x... ),
             m_offset(initialize<s_index, First>(t, x...))
         {
@@ -85,6 +99,12 @@ namespace detail_ {
                           GenericElements...>(), "Out of bound");
         }
 
+        template <int Idx, typename Type, typename... GenericElements>
+        constexpr sized_value_tuple ( position<Idx, Type> && t,
+                                      GenericElements && ... x):
+            sized_value_tuple(t, x...)
+        {
+        }
 
         constexpr sized_value_tuple ():
             super(),
@@ -93,8 +113,15 @@ namespace detail_ {
 
         template<int Idx>
         constexpr auto get() const {
+            static_assert(Idx <= NDim, "error");
             return static_if<Idx==s_index>
                 ::apply(m_offset, super::template get<Idx>());
+        }
+
+        template<int Idx, typename T>
+        void set(T const& arg_) {
+
+            access<sized_value_tuple,Idx>::type::m_offset = arg_;
         }
 
     protected:
@@ -108,7 +135,7 @@ namespace detail_ {
         static const int n_dim=NDim;
 
         template <typename... GenericElements>
-        constexpr sized_value_tuple ( GenericElements... ) {}
+        constexpr sized_value_tuple ( GenericElements const& ... ) {}
 
         constexpr sized_value_tuple ( ) {}
 
@@ -120,6 +147,11 @@ namespace detail_ {
             static_assert((Idx<=n_dim),
                           "sized_value_tuple out of bound access");
             return 0; }
+
+        template<int Idx, typename T>
+        void set(T const& arg_) {
+        }
+
     };
 } //namespace detail_
 

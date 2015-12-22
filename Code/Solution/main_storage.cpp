@@ -44,5 +44,4 @@ int main(){
     static_assert(c_meta_sol_.index(0,0,0,1,0)==6, "error");
     static_assert(c_meta_sol_.index(0,0,0,0,1)==1, "error");
 
-    return 0;
 }

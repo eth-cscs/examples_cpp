@@ -36,7 +36,7 @@ struct my_traits {
     using value_type = typename T::value_type;
 
 
-    static value_type get_value(T const& f)
+    static value_type value_of(T const& f)
     {
         return f.value;
     }
@@ -85,7 +85,7 @@ void print(First const& f, T const&... v) {
 
     auto ls = print_impl::get_left_separator<traits>(f);
     auto rs = print_impl::get_right_separator<traits>(f);
-    typename traits::value_type value = traits::get_value(f);
+    typename traits::value_type value = traits::value_of(f);
 
     std::cout << ls << value << rs;
     print(v...);
@@ -108,7 +108,7 @@ struct my_traits<complex> {
     using value_type = complex;
 
 
-    static value_type get_value(complex const& f)
+    static value_type value_of(complex const& f)
     {
         return f;
     }
@@ -125,5 +125,4 @@ int main() {
 
     print(A<int>(2), B("ciao"), A<double>(3.1415926), B("this is it"), complex(1.41, 3.14));
 
-    return 0;
 }

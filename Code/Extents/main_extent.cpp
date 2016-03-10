@@ -3,7 +3,6 @@ Example for the computation of extents
 
 current status:
 computes the extents and puts them in a vector
-TODO no make_independent is implemented yet
 TODO no multiple stencils
 TODO how does the fusion affect the computation?
 

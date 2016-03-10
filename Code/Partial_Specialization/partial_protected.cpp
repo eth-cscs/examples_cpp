@@ -59,5 +59,4 @@ int main() {
     */
     // std::cout << A<B<2>,1>::value << std::endl;
 
-    return 0;
 }

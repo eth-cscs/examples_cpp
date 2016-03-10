@@ -23,7 +23,7 @@
 #include <string>
 
 struct pi {
-    double value;
+    double m_value;
 
     constexpr pi()
         : value{3.1415926/4.0}
@@ -32,10 +32,14 @@ struct pi {
     constexpr pi(int n)
         : value(3.1415926/4.0*n)
     {}
+
+    operator double() const {
+        return m_value;
+    }
 };
 
 std::ostream& operator<<(std::ostream& s, pi p) {
-    return s << p.value;
+    return s << static_cast<double>(p);
 }
 
 template<short T, short U>

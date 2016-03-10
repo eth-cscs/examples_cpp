@@ -72,5 +72,4 @@ int main() {
 
     d1.stats();
 
-    return 0;
 }

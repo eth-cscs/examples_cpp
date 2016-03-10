@@ -463,5 +463,4 @@ int main() {
 
     std::cout << AnalyzeShape<char**[][1][666]>::shape() << std::endl;
 
-    return 0;
 }

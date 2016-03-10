@@ -14,7 +14,7 @@ struct p2{
 
 template<typename Extent=extent<> >
 struct functor1{
-    typedef p1<extent<boost::mpl::int_<0>,boost::mpl::int_<1>,boost::mpl::int_<2>,boost::mpl::int_<0>,boost::mpl::int_<1>,boost::mpl::int_<2> > > p_1;
-    typedef p2<extent<boost::mpl::int_<0>,boost::mpl::int_<1>,boost::mpl::int_<2> > > p_2;
+    typedef p1<extent< 0,1,2,0,1,2 > > p_1;
+    typedef p2<extent< 0,1,2 > > p_2;
     typedef boost::mpl::vector2<p_1,p_2> arg_list;
 };

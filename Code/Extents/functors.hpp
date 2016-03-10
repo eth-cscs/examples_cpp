@@ -40,7 +40,7 @@ struct functor4{
 /* functor depending on both functor1 and functor4 */
 template<typename Extent=extent<> >
 struct functor3{
-    typedef functor1<extent<> > p_1;
+    typedef functor1<extent<> > p_1;//these dependencies can be deduced by the make_stencil
     typedef functor4<extent<> > p_2;
     typedef boost::mpl::vector2<p_1,p_2> arg_list;
 };

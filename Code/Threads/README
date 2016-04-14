@@ -1,0 +1,78 @@
+On Daint with gcc 5.1.0 compile with 
+
+g++ -o hello_world_1 hello_world_1.cpp -std=c++11 -pthread
+
+The link to pthread shows that a thrading low level backend is needed, can we
+provide example of other cases?
+
+#1: Notes:
+	1- Every thread needs an "initial function", where new thread execution
+ 	begins. For the "main" thread this is the main functions
+	2- A call to thread constructor creates a new thread, which is responsible
+ 	for the execution of the provided initial function
+	3- The main thread continues its execution completely independently from the new one
+ 	and it would reach the program end in absence of the join statement	
+
+	Questions:
+	1- What are main differences with normal hello world?
+	2- How many times the message will be printed?
+
+#2: Notes:
+	1- std::threads works with any callable type, namely....	
+	2- Callable object, like structs with oprator() method, are copied by
+	thread ctor so the external original variable could also go out of scope
+	without any problem (in absence of other references to destroyed
+	variables, see next example)
+ 
+	Questions:
+	1- What happen passing a temporary to thread ctor without uniform
+	initialization syntax (most vexing parse)?
+
+#3: Notes:
+	1- Basic thread management is done using .join and .detach. 
+	2- .join blocks the method calling function until the thread work is
+	finished and then cleans any storage associated with the joined thread:
+	the std::thread object is no longer associated with the now finished thread
+	3- The above cleaning condition is true also for finished thread, even if
+	we do not call the join method. This needs to be managed when we deal with
+	detached threads.
+	4- .detach method puts the thread on the background, ownership and control
+	is passed to C++ RT Libraryand cannot be joined. We can check his status
+	with the .joinable method. Basically this means that we are detaching the
+	cpu process from the C++ std::threads object 
+	5- Both .join and .detach method can only be executable on a joinable thread
+
+    Questions:
+    1- What is the equivalent in OpenMP?
+    2- When it is useful to have detached threads?
+
+#4: Notes
+	1- Basic syntax for passing parameters to thread function
+	2- Input parameters are always copied into thread internal storage, even
+	if the thread function expects a reference.
+	3- In order to really pass a reference the i/o parameter must be wrapped
+	by std::ref()
+	   3.1- The above comment seems to be not completely correct, without
+	   std::ref the code does not compile at all
+	4- std::thread constructor and std::bind operation are based on the same
+	mechanism, therefore member function pointers can be provided as thread
+	function 
+
+	Questions:
+	1- Explanation of the error in case of missing std::ref()
+
+6- Here we introduce a wai to identify threads: we do that with the
+    std::this_thread_id::get_id() but also .get_id() can be used. To be noted
+    that the std::thread::id is an object, not a number, and a set of
+    operators are available for comparison, etc. The value can be printed but
+    it is completely different from what we could expect...
+
+	Questions:
+	3- How are thread numbered in pthread?
+
+
+TODO: 
+4.3.1: clarify when and why this works...
+
+
+#? How many threads can I use?

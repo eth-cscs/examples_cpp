@@ -55,9 +55,9 @@ g++ -o hello_world_1 hello_world_1.cpp -std=c++11 -pthread
    by std::ref().
    	  3.1- The above comment seems to be not completely correct, without
 	  std::ref the code does not compile at all.
-	  4- std::thread constructor and std::bind operation are based on the same
-	  mechanism, therefore member function pointers can be provided as thread
-	  function.
+   4- std::thread constructor and std::bind operation are based on the same
+   mechanism, therefore member function pointers can be provided as thread
+   function.
 
    Questions:
    1- Explanation of the error in case of missing std::ref().

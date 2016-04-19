@@ -2,9 +2,6 @@ On Daint with gcc 5.1.0 compile with
 
 g++ -o hello_world_1 hello_world_1.cpp -std=c++11 -pthread
 
-The link to pthread shows that a thrading low level backend is needed, can we
-provide example of other cases?
-
 #1 (1.4): 
    Notes:
    1- Every thread needs an "initial function", where new thread execution

@@ -1,0 +1,18 @@
+On Daint with gcc 5.1.0 compile with 
+
+g++ -o hello_world_1 hello_world_1.cpp -std=c++11 -pthread
+
+#1 (3.2.1): 
+   Notes:
+   1- "Invariants" are statements that are always true about a particular data structure.
+   2- In concurrency a race condition is anything where the outcome depends on the relative ordering of execution on two or more threads: the thread race to perform their respective operations.
+   3- Race conditions can be benign, when invariants of the system are conserved, or problematic and in this case the cause an undefined behavior.
+   4- Race conditions can be avoided if we can mark all the pieces of code that access shared data structures as "mutually exclusive": with std::thread this can be done using the synchronization primitive "mutex" (mutual exclusion) and the corresponding lock/unlock operations
+   5- Usage of .lock()/.unlock() methods is a bad practice since the unlock step can be forgotten: C++ provides a class template implementing the RAII idiom for a mutex at block scope level
+
+   Questions:
+   1- What if I use a local std::mutex instance?
+
+TODO: 
+
+General questions:	  

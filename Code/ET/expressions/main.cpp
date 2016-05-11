@@ -3,10 +3,10 @@
 using namespace expressions;
 int main(){
 
-    constexpr auto expr = arg(3.)+arg(4.)+arg(4);
+    constexpr auto expr = p()+p()*p()*p();
     std::cout<<expr.to_string();
     std::cout<<" = ";
-    std::cout<< evaluation::value(expr)<<std::endl;
-    std::cout<< "derivative: "<< evaluation::value(D(expr))<<std::endl;
-    static_assert(evaluation::value(expr)==11., "error");
+    std::cout<< expr(3)<<std::endl;
+    std::cout<< "derivative: "<< D(expr)(3)<<std::endl;
+    // static_assert(evaluation::value(expr)==11., "error");
 }

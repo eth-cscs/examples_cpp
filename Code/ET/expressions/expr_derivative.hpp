@@ -1,54 +1,62 @@
+#pragma once
+
+#include <type_traits>
+
+
+namespace expressions{
+
     template <typename ArgType1>
-    struct unary_expr{
-    /**@brief generic expression constructor*/
-    constexpr unary_expr(ArgType1 const& first_operand)
-        :
-        first_operand{first_operand}
-    {}
+    constexpr expr_derivative<ArgType1>
+    D (ArgType1 arg1){
+        return expr_derivative<ArgType1>();}
 
-    template<typename Arg1>
-    constexpr unary_expr( unary_expr<Arg1> const& other): first_operand(other.first_operand){}
+}//namespace expressions
 
-    ArgType1 const first_operand;
+template <typename ArgType1>
+struct expr_derivative;
 
-private:
-    /**@brief default empty constructor*/
-    constexpr unary_expr(){}
+/**@brief Expression retrieving the maximum over a specific dimension*/
+template<>
+struct expr_derivative<p>{
+
+    template <typename T>
+    constexpr auto operator() (T t_) const{
+        return (T) 1;
+    }
+
+
+    std::string to_string() const {
+        return std::string(" D(") + p().to_string() + ") ";
+    }
 };
 
-    /**@brief Expression retrieving the maximum over a specific dimension*/
-    template <typename ArgType1>
-    struct expr_derivative : public unary_expr<ArgType1>{
-        typedef unary_expr<ArgType1> super;
-        constexpr expr_derivative(ArgType1 const& first_operand_):super(first_operand_){}
+/**@brief Expression retrieving the maximum over a specific dimension*/
+template <typename T1, typename T2>
+struct expr_derivative<expr_plus<T1, T2> >{
 
-        constexpr expr_derivative(expr_derivative const& other_):super(other_){}
+    template <typename T>
+    constexpr auto operator() (T t_) const{
+        return expressions::D(T1())(t_)+expressions::D(T2())(t_);
+    }
 
-    private:
-        constexpr expr_derivative(){};
+    std::string to_string() const {
+        return std::string(" D(") + expr_plus<T1,T2>().to_string() + ") ";
+    }
+};
 
-    public:
-        std::string to_string() const {
-            return std::string(" D(") + super::first_operand.to_string() + ") ";
-        }
-    };
+/**@brief Expression retrieving the maximum over a specific dimension*/
+template <typename T1, typename T2>
+struct expr_derivative<expr_times<T1, T2> >{
 
-    namespace expressions{
+    template <typename T>
+    constexpr auto operator()(T t_)  const{
+        return
+            T1()(t_) * expressions::D(T2())(t_)
+            +
+            expressions::D(T1())(t_) * T2()(t_);
+    }
+    std::string to_string() const {
+        return std::string(" D(") + expr_times<T1,T2>().to_string() + ") ";
+    }
 
-        template <typename ArgType1>
-        constexpr expr_derivative<ArgType1>
-        D (ArgType1 arg1){
-            return expr_derivative<ArgType1>(arg1);}
-
-
-    namespace evaluation{
-
-        // derivative evaluation
-        // each operator implements its own derivative
-        template <typename IterateDomain, typename ArgType1>
-        static double
-        constexpr
-        value( expr_derivative<ArgType1> const& arg );
-
-    }//namespace evaluation
-    }//namespace expressions
+};

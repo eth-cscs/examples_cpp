@@ -1,8 +1,5 @@
 #pragma once
 
-#include <type_traits>
-
-
 namespace expressions{
 
     template <typename ArgType1>
@@ -15,7 +12,6 @@ namespace expressions{
 template <typename ArgType1>
 struct expr_derivative;
 
-/**@brief Expression retrieving the maximum over a specific dimension*/
 template<>
 struct expr_derivative<p>{
 
@@ -24,13 +20,11 @@ struct expr_derivative<p>{
         return (T) 1;
     }
 
-
     std::string to_string() const {
         return std::string(" D(") + p().to_string() + ") ";
     }
 };
 
-/**@brief Expression retrieving the maximum over a specific dimension*/
 template <typename T1, typename T2>
 struct expr_derivative<expr_plus<T1, T2> >{
 
@@ -44,7 +38,6 @@ struct expr_derivative<expr_plus<T1, T2> >{
     }
 };
 
-/**@brief Expression retrieving the maximum over a specific dimension*/
 template <typename T1, typename T2>
 struct expr_derivative<expr_times<T1, T2> >{
 

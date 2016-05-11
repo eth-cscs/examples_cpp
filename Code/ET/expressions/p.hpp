@@ -13,3 +13,6 @@ struct p{
         return std::string(" x ");
     }
 };
+namespace expressions{
+    constexpr auto x=p();
+}

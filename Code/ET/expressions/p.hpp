@@ -1,4 +1,5 @@
 #pragma once
+namespace expressions{
 
 struct p{
 
@@ -12,7 +13,16 @@ struct p{
 
         return std::string(" x ");
     }
+
+    //solution exercice 1
+    constexpr int sum_ops() const {
+        return 0;
+    }
+    constexpr int mult_ops() const {
+        return 0;
+    }
+    /////////////////////
 };
-namespace expressions{
+
     constexpr auto x=p();
 }

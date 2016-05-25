@@ -1,0 +1,66 @@
+On Daint with gcc 5.1.0 compile with 
+
+g++ -o hello_world_1 hello_world_1.cpp -std=c++11 -pthread
+
+#1 (4.2.1): 
+   Notes:
+   1- Given 2 threads working on the same data for updating and processing the
+   data itself respectively, we need to ensure protected access and therefore
+   each thread has to wait the other one for the data to be ready to perform
+   its work.
+   2- We can implement the above the above code in different (unoptimal) ways,
+   all using a shared "wait" flag variable:
+   	   2.1- std::lock_guard case   
+	   		2.1.1- The check on wait_flag is unprotected but being read-only
+   		   		   should not cause problems (extra while iterations only).
+			2.1.2- Bad strategy because of resource wasting in while
+				   loop condition check and for the possible extra iterations.
+	   2.2- std::lock/std::unlock case:
+	   		2.2.1- The check on wait_flag is now protected.
+			2.2.2- Bad strategy again because of resource wasting as above,
+   				   even with a sleep that is hard to tune (too small and too large cause both
+   				   delays), and because during the mutex locking of the waiting thread for the check
+   				   the other is not allowed to do the same for the waiting flag update.
+   	   		2.2.3- You have to remember the unlock at the end of each for iteration!
+	   2.3- std::unique_lock case: as 2.2 without the drawback of the final
+   	   		unlock call, since unlocking is controlled by scope.
+   3- The best would be to have a mechanism allowing the waiting thread just
+   waiting without wasting resource and prevent operation of other threads to
+   be completed, as well as a way for the working thread to notify the
+   other. This can be done using std::condition_variables and call to .wait()
+   and .notify_one() methods.
+       3.1- .wait() method take a std::unique_lock (explain while!) and what
+	   		it does is putting the current thread in the list of the waiting one and
+   			release the lock (if thread calling .wait() does not hold the lock the
+   			consequence is undefined behavior) so that other threads can go on.
+	   3.2- the waiting thread wake ups if a call to .notify_one() is
+   	   		performed by another thread or in case of spurious wake ups (which
+   			are unpredictable): when this happen the lock is reactivated by the thread
+   			and .wait() returns.
+	   3.3- Being unpredictable, sourious wake ups should be avoided and it
+	   		can be done using the overloaded .wait() method taking as second parameter
+   			a predicate evaluating as bool: in this case the wait method in case of a
+   			wake up (notified or spurious) returns only if the predicate evaluates to
+   			true and lock is lockable (?).
+	   3.4- lock.unlock() must be called asap in order to allow the other
+			thread to start working if possible and in any case before the call to .notify_one() 
+	   3.5- Besides code compactness the advantage of std::condition_variable
+   	   		.wait() with the predicate is that the predicate itself is not continuously
+   			checked as in the manual case, even if it is equivalent to a while loop
+   			(see how in the implementation). Since the predicate check is
+   			performed even in case of spurious wake ups also this strategy can cause
+   			lock/unlock overhead as in example 2?
+   	
+
+   Questions:
+   1- Try to remove notify one and recompile to see spurious wakeups
+   2- Why spurious wake ups exist?
+   3- Why .wait() needs a std::unique_lock as parameter and not a std::lock_guard?
+
+TODO: 
+1- #1.3.2 Have a look to wait implementation 
+2- #1.3.4 What if notify is called by the lock retained?
+3- #1.3.5 
+
+General questions:	  
+1- Debugging/Profiling tools example

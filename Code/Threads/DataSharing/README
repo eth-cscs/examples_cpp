@@ -1,0 +1,55 @@
+On Daint with gcc 5.1.0 compile with 
+
+g++ -o hello_world_1 hello_world_1.cpp -std=c++11 -pthread
+
+#1 (3.2.1): 
+   Notes:
+   1- "Invariants" are statements that are always true about a particular data structure.
+   2- In concurrency a race condition is anything where the outcome depends on the relative ordering of execution on two or more threads: the thread race to perform their respective operations.
+   3- Race conditions can be benign, when invariants of the system are conserved, or problematic and in this case the cause an undefined behavior.
+   4- Race conditions can be avoided if we can mark all the pieces of code that access shared data structures as "mutually exclusive": with std::thread this can be done using the synchronization primitive "mutex" (mutual exclusion) and the corresponding lock/unlock operations
+   5- Usage of .lock()/.unlock() methods is a bad practice since the unlock step can be forgotten: C++ provides a class template implementing the RAII idiom for a mutex at block scope level
+
+   Questions:
+   1- What if I use a local std::mutex instance?
+
+#2 (3.2.4)
+   Notes:
+   1- Non protected data can cause race condition that in general must be
+   avoided: t1 starts its work on a given data set (a) while t2 swaps it with
+   another one (b), with the danger of inconsistencies in the result of
+   work_on_data
+   2- Adding a std::mutex data member allows to protect data belonging to the
+   same scope, namely the struct itself. This is an important point: the
+   mutexes, both the one belonging to "this" instance and the one belonging to
+   the external one, are locked for the duration of the lock_guard namely the
+   struct methods themselves. However the lock covers all the scope the
+   corresponding mutex belongs to, namely the whole struct, not the single
+   method.
+   3- The used protection method is however prone to deadlock, what if we
+   switch the input parameters as in point 3? This is a common deadlock source
+   case, characterized by locks acquired in different orders. Other deadlock
+   cases can be found ...
+   4- The above deadlock problem can be fixed upgrading our struct with the
+   std::lock function wich allows to lock multiple mutexes without incurring
+   in the above deadlock issues. Calls to std::lock_guard are still needed but
+   using the std::adopt_lock flags, which asks to guard to acquire an existing
+   lock without locking it again.
+   
+   Questions: 
+   1- Why using input data reference?
+   2- What about lock_guard class: is a templated object, which mutex-like
+   objects can be used as template parameters?
+   3- What if we try to lock an already locked mutex?   
+   4- What if swap/work_on_data is performed between the same object instance
+   (add check!)?   
+   5- What about thread safety of stl containers, do we need to build a wrap
+   as in the example or is there something available?
+   6- What about copy, assignement, move, etc operators for protected data
+   struct, do we need to implement them to avoid problem with mutex data member?    
+
+TODO: 
+1- #2 Example with lock hierarchy
+2- #2 Fix logs and case list
+
+General questions:	  

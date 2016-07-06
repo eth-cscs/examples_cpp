@@ -3,5 +3,6 @@
 #include <iostream>
 
 #define SHOW(X) std::cout << #X << " :  " << X << "\n";
+#define SHOW_BOOL(X) std::cout << #X << " :  " << std::boolalpha << X << "\n";
 
 #endif

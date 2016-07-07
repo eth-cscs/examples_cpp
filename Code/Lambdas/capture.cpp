@@ -17,9 +17,19 @@ struct A {
         f();
     }
 
-    void alternate2() {
+    void alternate2() { // This is the same as alternate
         auto f = [=]() {this->a++; std::cout << this->a << std::endl;};
         f();
+    }
+
+    void safe_version() {
+        int a = 5;
+        auto x = [=] () {
+            std::cout << this->a << std::endl;
+            std::cout << a << std::endl;
+        };
+        a = 3;
+        x();
     }
 
     void out() const {
@@ -41,5 +51,7 @@ int main() {
 
     a.out();
 
+    a.safe_version();
+    a.out();
     return 0;
 }

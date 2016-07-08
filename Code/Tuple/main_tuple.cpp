@@ -26,11 +26,11 @@ struct pi {
     double m_value;
 
     constexpr pi()
-        : value{3.1415926/4.0}
+        : m_value{3.1415926/4.0}
     {}
 
     constexpr pi(int n)
-        : value(3.1415926/4.0*n)
+        : m_value(3.1415926/4.0*n)
     {}
 
     operator double() const {
@@ -113,5 +113,5 @@ int main(){
     //the interface for generic tuple (not only integers) becomes a bit cumbersome
     detail_::value_tuple_mixed< make_value_tuple<int,4>, const value_tuple<int, char, pi>, c_tuple_> tmp2;
 
-    static_assert(tmp2.get<3>().value==pi(10).value, "error");
+    static_assert(tmp2.get<3>().m_value==pi(10).m_value, "error");
 }

@@ -23,12 +23,16 @@ std::size_t size_of(my_vec<T> const& v) {
 // }
 
 template <template <typename, typename> class V>
-void do_nothing(V<int, my_allocator<int>> const&) {}
+void do_nothing(V<int, my_allocator<int>> const&) {
+    std::cout << "This is executed\n";
+}
 
 // If you comment the previous do_nothing,this one will not be picked
 // up.  my_vec, as a type, is a template with 2 arguments!
 template <template <typename> class V>
-void do_nothing(V<int> const&) {}
+void do_nothing(V<int> const&) {
+    std::cout << "this is never executed\n";
+}
 
 int main() {
     std::cout << size_of(my_vec<int>(10)) << "\n";

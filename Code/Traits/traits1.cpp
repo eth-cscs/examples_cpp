@@ -19,10 +19,10 @@ struct A {
 struct B {
 
     using value_type = std::string;
-    std::string value;
+    value_type value;
     static constexpr bool has_separators = false;
 
-    B(std::string && v) : value{std::move(v)} {}
+    B(value_type && v) : value{std::move(v)} {}
 };
 
 /**

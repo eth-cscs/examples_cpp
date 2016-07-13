@@ -16,5 +16,5 @@ int main() {
     // Template arguments types are deduced!
     foo(3.14159);
 
-    foo(std::string("string"));
+    foo("string");
 }

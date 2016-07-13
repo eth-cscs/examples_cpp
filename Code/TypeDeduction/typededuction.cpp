@@ -62,11 +62,11 @@ check_these_rvr(T0 && x, T1 && y, T2 && z) {
 #if __cplusplus >= 201402L
     {
         decltype(auto) _x = x;
-        static_assert(std::is_same<decltype(_x), int&>::value, "1");
+        static_assert(std::is_same<decltype(_x), decltype(x)>::value, "1");
         decltype(auto) _y = y;
-        static_assert(std::is_same<decltype(_y), int const&>::value, "1");
-        decltype(auto) _z = z;
-        static_assert(std::is_same<decltype(_z), int&>::value, "1"); // !!!!
+        static_assert(std::is_same<decltype(_y), decltype(y)>::value, "1");
+        decltype(auto) _z = std::move(z);
+        static_assert(std::is_same<decltype(_z), decltype(z)>::value, "1"); // !!!!
     }
 #endif
 }

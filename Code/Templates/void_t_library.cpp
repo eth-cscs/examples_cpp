@@ -1,4 +1,4 @@
-#include "../show.h"
+    #include "../show.h"
 
 
 /////// FACILITY SIDE
@@ -20,7 +20,7 @@ namespace my_library {
         };
 
         template<typename T>
-        struct sum<T, facility::void_t < can_add<T>>> {
+        struct sum<T, facility::void_t < can_add<T>>> { // using the void_t idiom
             static T add(T const &a, T const &b) {
                 return a + b;
             }
@@ -29,7 +29,7 @@ namespace my_library {
 
     template<typename T>
     void do_sum(T const &a, T const &b) {
-        try {
+        try { // this try is just an example. Exceptions should not be used to report errors
             SHOW(detail::sum<T>::add(a, b))
         }
         catch (int ex) {

@@ -5,6 +5,7 @@
 
 
 #include <vector>
+#include <algorithm>
 #include "../show.h"
 
 struct A {
@@ -43,19 +44,11 @@ struct C {
 };
 
 
-template <typename T>
-void foo(T const&) {
-    using U = typename T::type;
-
-}
-
-
 int main() {
     // aggregate
     A x{2,3,{4,5}};
     SHOW(x.f.y);
 
-    foo(x.f);
     B b0{10};
     SHOW(b0.v.size());
     b0.out();

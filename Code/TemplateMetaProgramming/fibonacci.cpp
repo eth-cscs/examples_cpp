@@ -16,5 +16,5 @@ struct fibonacci<0> {
 };
 
 int main() {
-    std::cout << fibonacci<6>::value << "\n";
+    std::cout << fibonacci<6>::value << "\n";  //  movl    $8, %esi
 }

@@ -12,5 +12,5 @@ struct factorial<1> {
 
 
 int main() {
-    std::cout << factorial<5>::value << "\n";
+    std::cout << factorial<5>::value << "\n"; //     movl    $120, %esi
 }

@@ -7,5 +7,5 @@ struct integral_constant {
 
 
 int main() {
-    static_assert(integral_constant<int, 7>::value == 7, “Error”)
+    static_assert(integral_constant<int, 7>::value == 7, "Error");
 }

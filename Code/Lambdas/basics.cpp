@@ -12,12 +12,14 @@ int main() {
         auto f = [sum](int a, int b) { SHOW_BOOL(sum); return sum?(a + b):(a-b); };
         SHOW((f(3, 4)));
     }
+#if __cplusplus==201402L
     std::cout << "\n\nLambda that capture a variable by value and renames it\n";
     {
         bool sum = true;
         auto f = [flag=sum](int a, int b) { SHOW_BOOL(flag); return flag?(a + b):(a-b); };
         SHOW((f(3, 4)));
     }
+#endif
     std::cout << "\n\nLambda that capture a variable by value and one by reference\n";
     {
         bool sum = true;

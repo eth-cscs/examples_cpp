@@ -14,12 +14,12 @@ struct instr_t {
 
 std::ostream& operator<<(std::ostream& s, instr_t a) {
     return s << "inst " << a.oper
-<< ", " << a.cond1
-                           << ", " << a.val1
-                                      << ", " << a.cond2
-                                                 << ", " << a.val2
-                                                            << ", " << a.act
-                                                                       << ", " << a.cell << "\n";
+             << ", " << a.cond1
+             << ", " << a.val1
+             << ", " << a.cond2
+             << ", " << a.val2
+             << ", " << a.act
+             << ", " << a.cell << "\n";
 }
 
 int main() {

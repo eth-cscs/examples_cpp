@@ -45,7 +45,11 @@ int main() {
     assert(*wrongf == nullptr);
 
     // So now we can take our binded function and pass it to the C function
-    auto to_run = *(my_f.target < int(*)(int,int)>());
+    int(*to_run)(int,int) = *(my_f.target < int(*)(int,int)>());
     assert(to_run);
     run(to_run);
+
+    // BIND CAN DO WAY MORE
+    std::function<int(int,int)> foo2 = std::bind(foo, _2, _2);
+    SHOW(foo2(100,5));
 }

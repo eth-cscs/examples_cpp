@@ -7,8 +7,8 @@ struct movable {
     std::vector<int> v;
 
     movable(int s) : v(s) {std::cout << "Default\n";}
-    movable(movable&& other) : v(std::move(other.v)) {std::cout << "Move\n";}
-    movable(movable const & other) = delete; //: v(other.v) {std::cout << "Copy\n";}
+    //movable(movable&& other) = delete;
+    movable(movable const & other) : v(other.v) {std::cout << "Copy\n";}
 };
 
 int main() {

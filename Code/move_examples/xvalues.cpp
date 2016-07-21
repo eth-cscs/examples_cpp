@@ -1,6 +1,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <algorithm>
+#include "../show.h"
 
 struct A {
     int m;
@@ -33,29 +34,41 @@ void foo(A && x) {
 
 int main() {
 
-    A a(10), b(20);
+    {
+        int && a = 10;
+        auto && b = a;
+        SHOW_BOOL((std::is_same<decltype(b), int&>::value));
+    }
+    {
+        int && a = 10;
+        auto && b = std::move(a);
+        SHOW_BOOL((std::is_same<decltype(b), int&&>::value));
+    }
+    {
+        int && a = 10;
+        auto && b = std::forward<int&&>(a);
+        SHOW_BOOL((std::is_same<decltype(b), int&&>::value));
+    }
+    {
+        auto && b = 10;
+        SHOW_BOOL((std::is_same<decltype(b), int&&>::value));
+    }
 
-    std::cout << ((a+b).m) << std::endl;
+    {
+        A a(10), b(20);
+
+        std::cout << ((a + b).m) << std::endl;
 
 
-    A&& ar = std::move(a);
+        A &&ar = std::move(a);
 
-    ar.m = 14;
+        ar.m = 14;
 
-    std::cout << a.m << " == " << ar.m << std::endl;
+        std::cout << a.m << " == " << ar.m << std::endl;
 
-    foo(a);
-    foo(ar);
-    foo(std::move(ar));
+        foo(a);
+        foo(ar);
+        foo(std::move(ar));
 
-    std::cout << typeid(decltype(a)).name() << std::endl;
-
-    std::cout << typeid(decltype(ar)).name() << std::endl;
-
-    std::cout << "min " << std::min(a,A(7)) << std::endl;
-
-    A const& y = std::min(a,A(7));
-
-    std::cout << "the out " << y << std::endl;
-    return 0;
+    }
 }

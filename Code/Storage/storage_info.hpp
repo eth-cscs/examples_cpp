@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>
+#include <cassert>
 
 //storage meta information
 template <int Size>
@@ -25,15 +26,15 @@ struct storage_info{
         return compute_index(std::make_integer_sequence<int, sizeof...(Ints)>(), idx ... );
     }
 
-    template<int First, int ... Indices, typename First_Int, typename ... Ints>
-    constexpr int compute_index(std::integer_sequence< int,  First, Indices ... > , First_Int first_, Ints ... indices) const {
-        return first_ + m_dims[First] * compute_index(std::integer_sequence<int, Indices ...>(), indices ...);
-    }
+    template<typename T>
+    constexpr int compute_index(T) const { assert(false); }
 
-    //recursion anchor
-    template<int First, typename First_Int, typename ... Ints>
-    constexpr int compute_index(std::integer_sequence< int,  First> , First_Int first_, Ints ... indices) const {
-        return first_ ;
+        template<int First, int ... Indices, typename First_Int, typename ... Ints>
+    constexpr int compute_index(std::integer_sequence< int,  First, Indices ... > , First_Int first_, Ints ... indices) const {
+        return (sizeof...(Indices)>0)?
+            first_ + m_dims[First] * compute_index(std::integer_sequence<int, Indices ...>(), indices ...)
+            :
+            first_;
     }
 
 private:

@@ -21,7 +21,7 @@ public:
 
 	void setValue(const int i_value) { m_value = i_value; }	
 	
-	void modify(void);
+	void modify(const int i_value);
 		
 private:
 	
@@ -31,32 +31,32 @@ private:
 
 #ifdef SMART
 
-void workOnObject(const std::shared_ptr<Object> i_object) {
+void workOnObject(const int i_value, const std::shared_ptr<Object> i_object) {
 
 	// 0 - Add missing code
-	i_object->setValue(32);
+	i_object->setValue(i_value);
 
 }
 
 
-void Object::modify(void) {
+void Object::modify(const int i_value) {
 
 	// 1 - Add missing code
 	std::shared_ptr<Object> sp = shared_from_this();
-	workOnObject(sp);
+	workOnObject(i_value,sp);
 }
 
 #else
 
-void workOnObject(Object* const i_object) {
+void workOnObject(const int i_value, Object* const i_object) {
 	
-	i_object->setValue(32);
+	i_object->setValue(i_value);
 	
 }
 
-void Object::modify(void) {
+void Object::modify(const int i_value) {
 	
-	workOnObject(this);
+	workOnObject(i_value,this);
 	
 }
 
@@ -67,7 +67,7 @@ int main(){
 
 	std::shared_ptr<Object> object(new Object(23));
 	
-	object->modify();
+	object->modify(32);
 	
 	SHOW(object->getValue());
 }

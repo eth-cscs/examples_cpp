@@ -14,7 +14,7 @@ struct movable {
 
 
     // The exixtence of a copy constructor prevent the automatic generation of the move constructor. Even if it's deleted.
-    //    movable(movable const & other) = delete;
+    //   movable(movable const & other) = delete;
 
     int size() const {return s;}
 };

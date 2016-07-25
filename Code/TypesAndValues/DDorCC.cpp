@@ -9,10 +9,10 @@
 #include "../show.h"
 
 struct A {
-        int a, b;
-        struct {
-            int x,y;
-        } f;
+    int a, b;
+    struct {
+        int x,y;
+    } f;
 };
 
 struct B {
@@ -20,11 +20,6 @@ struct B {
 
     B(int i) : v(i) {}
     B(int i, int j) : v(i,j) {}
-
-    void out() const {
-        std::for_each(v.begin(), v.end(), [](const int i) { std::cout << i << ",";});
-        std::cout << "\n";
-    }
 };
 
 struct C {
@@ -36,48 +31,70 @@ struct C {
     C(std::initializer_list<value_type> const& l)
             : v(l)
     {}
-
-    void out() const {
-        std::for_each(v.begin(), v.end(), [](const value_type i) { std::cout << i << ",";});
-        std::cout << "\n";
-    }
 };
 
+OUT(A) {
+    return s << "struct A {\n    int " << a.a << ", " << a.b << ";\n    struct {\n      int " << a.f.x << ", " << a.f.y << "\n    } f;\n}\n\n";
+}
 
-int main() {
+OUT(B) {
+    s << "struct B {\n    <";
+    for (auto i: a.v) { s << i << " ";}
+    s << ">;\n [" << "size: " << a.v.size() << "\n};\n\n";
+    return s;
+}
+
+OUT(C) {
+    s << "struct C {\n    <";
+    for (auto i: a.v) { s << i << " ";}
+    s << ">;\n [" << "size: " << a.v.size() << "\n};\n\n";
+    return s;
+}
+
+void test() {
     // aggregate
-    A x{2,3,{4,5}};
-    SHOW(x.f.y);
+    {
+        A x{2, 3, {4, 5}};
+        SHOW(x);
+    }
+    {
+        A x;
+        SHOW(x);
+    }
+    {
+        A x{};
+        SHOW(x);
+    }
+    {
+        A x = A();
+        SHOW(x);
+    }
 
     B b0{10};
-    SHOW(b0.v.size());
-    b0.out();
+    SHOW_PREFIX("B b0{10};", b0);
 
     B b1(10);
-    SHOW(b1.v.size());
-    b1.out();
+    SHOW_PREFIX("B b1(10);", b1);
 
     B b2{10,4};
-    SHOW(b2.v.size());
-    b2.out();
+    SHOW_PREFIX("B b2{10,4};", b2);
 
     B b3(10,4);
-    SHOW(b3.v.size());
-    b3.out();
+    SHOW_PREFIX("B b3(10,4);", b3);
 
     C c0{10};
-    SHOW(c0.v.size());
-    c0.out();
+    SHOW_PREFIX("C c0{10};",c0);
 
     C c1(10);
-    SHOW(c1.v.size());
-    c1.out();
+    SHOW_PREFIX("C c1(10);",c1);
 
     C c2{10,4.7};
-    SHOW(c2.v.size());
-    c2.out();
+    SHOW_PREFIX("C c2{10,4.7};",c2);
 
     C c3(10,4.7);
-    SHOW(c3.v.size());
-    c3.out();
+    SHOW_PREFIX("C c3(10,4.7);",c3);
+}
+
+int main() {
+    test();
 }

@@ -14,6 +14,7 @@ struct movable {
 int main() {
     movable z(movable(200));
     SHOW(z.v.size());
+    //movable w(z);
     movable u(std::move(z));
     SHOW(z.v.size());
     SHOW(u.v.size());

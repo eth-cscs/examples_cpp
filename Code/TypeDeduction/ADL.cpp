@@ -24,7 +24,7 @@ std::ostream& operator<<(std::ostream& s, A::Y const& y) {
 namespace B {
     void f(int i) {
         SHOW(i);
-        if (i>0) f(i-1);   // calls B::f (endless recursion)
+        if (i>0) f(i-1);   // calls B::f
     }
     void g(A::X x) {
         //g(x);   // Error: ambiguous between B::g (ordinary lookup)
@@ -32,7 +32,7 @@ namespace B {
     }
     void h(A::Y y) {
         SHOW(y);
-        if (y.i>0) h(y-1);   // calls B::h (endless recursion): ADL examines the A namespace
+        if (y.i>0) h(y-1);   // calls B::h : ADL examines the A namespace
         // but finds no A::h, so only B::h from ordinary lookup is used
     }
 }

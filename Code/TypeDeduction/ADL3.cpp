@@ -14,7 +14,7 @@ void foo(name::X) { std::cout << "::foo: ";}
 template <typename T, void (*F)(T)>
 void bar(T x) {
     F(x);
-    //foo(x); // This goes int ADL
+    //foo(x); // This goes in ADL
     std::cout << "ADL does not apply\n";
 };
 

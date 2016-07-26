@@ -1,10 +1,10 @@
-    /**@brief Expression summing two arguments*/
+/**@brief Expression summing two arguments*/
 namespace expressions{
 template <typename T1, typename T2>
 struct expr_plus{
     std::string to_string() const {
         return std::string("(") + T1().to_string() + " + " + T2().to_string() + std::string(")") ;
-        }
+    }
 
     template<typename T>
     constexpr auto operator() (T t_) const{

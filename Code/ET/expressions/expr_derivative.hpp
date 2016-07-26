@@ -8,7 +8,7 @@ namespace expressions{
 template <typename T1>
 struct expr_derivative<expr_derivative<T1>>{
 
-    using value_t = decltype(D(T1()));
+    using value_t = decltype(D(D(T1())));
 
     template <typename T>
     constexpr auto operator() (T t_) const{

@@ -27,7 +27,7 @@ struct storage_info{
     }
 
     template<typename T>
-    constexpr int compute_index(T) const { assert(false); }
+    int compute_index(T) const { assert(false); }
 
         template<int First, int ... Indices, typename First_Int, typename ... Ints>
     constexpr int compute_index(std::integer_sequence< int,  First, Indices ... > , First_Int first_, Ints ... indices) const {

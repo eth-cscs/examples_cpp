@@ -34,8 +34,16 @@ void do_nothing(V<int> const&) {
     std::cout << "this is never executed\n";
 }
 
+
+template <template <typename, typename> class T,
+        typename U,
+        template <typename> class Alloc = std::allocator>
+using my_template = T<U, Alloc<U>>;
+
 int main() {
     std::cout << size_of(my_vec<int>(10)) << "\n";
 
     do_nothing(my_vec<int>(23));
+
+    my_template<std::vector, int, my_allocator> v;
 }

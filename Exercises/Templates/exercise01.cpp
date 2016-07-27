@@ -12,6 +12,6 @@ std::ostream& operator<<(std::ostream &s, record_t const& x) {
 
 int main() {
     /* Implement afacility to make this code to work as expected */
-    auto record = record_t( firstname = "Mauro", lastname = "Bianco", age = 21);
+auto record = record_t( lastname = "Bianco", age = 21, firstname = "Mauro" );
     std::cout << record << "\n";
 }

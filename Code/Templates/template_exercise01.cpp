@@ -89,6 +89,6 @@ std::ostream& operator<<(std::ostream &s, record_t const& x) {
 
 int main() {
     using namespace solution;
-    auto record = record_t( lastname = "Bianco", firstname = "Mauro", age = 21 );
+    auto record = record_t( lastname = "Bianco", age = 21, firstname = "Mauro" );
     std::cout << record << "\n";
 }

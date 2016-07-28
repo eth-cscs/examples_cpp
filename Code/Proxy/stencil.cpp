@@ -1,6 +1,7 @@
 #include <vector>
 #include <tuple>
 #include <iostream>
+#include <iomanip>
 #include <cstdlib>
 
 template <typename T>
@@ -117,7 +118,7 @@ void stencil_run(Operator op, halo_type<I,J,K>,
 
     for (int i = I; i < n-I; ++i) {
         for (int j = J; j < m-J; ++j) {
-            move_proxies_to(i,j,0, proxies);
+            move_proxies_to(i,j,K, proxies);
             for (int k = K; k < l-K; ++k) {
                 call<Operator, decltype(proxies), std::make_integer_sequence<int,sizeof...(Data)>>()(op, proxies);
                 increment_pointers(proxies);
@@ -132,23 +133,67 @@ int main(int argc, char** argv) {
     if (argc != 4) {std::terminate();}
 
     std::size_t n = std::atoi(argv[1]), m = std::atoi(argv[2]), l = std::atoi(argv[3]);
+    std::cout << n << " " << m << " " << l << "\n\n";
     storage_type<double> in(n,m,l);
     storage_type<double> out(n,m,l);
 
     std::size_t i{}, j{}, k{};
     stencil_run([&i, &j, &k, n, m, l](auto & in, auto & out) {
-            std::cout << i << " " << j << " " << k << "\n";
             out(0,0,0) = 0.0;
-            in(0,0,0) = i+j+k;
+            in(0,0,0) = (i+j+k);
             ++k;
             if (k==l) {k=0; ++j;}
             if (j==m) {j=0; ++i;}
         }, halo_type<0,0,0>(), n, m, l, in, out);
 
+    std::cout << "***********************************\n";
+    stencil_run([&i, &j, &k, n, m, l](auto & in, auto & out) {
+            std::cout << std::setw(4) << in(0,0,0) << " ";
+            ++k;
+            if (k==l) {k=0; ++j; std::cout << "\n";}
+            if (j==m) {j=0; ++i; std::cout << "\n\n";}
+        }, halo_type<0,0,0>(), n, m, l, in, out);
+    std::cout << "***********************************\n";
+
     stencil_run([](auto const& in, auto & out) {
-        out(0,0,0) = in(0,0,0) - 6.* (in(1,0,0) + in(-1,0,0)
+        out(0,0,0) =  in(0,0,0) - 6.* (in(1,0,0) + in(-1,0,0)
                                       + in(0,1,0) + in(0,-1,0)
                                       + in(0,0,1) + in(0,0,-1));
         }, halo_type<1,1,1>(), n, m, l, in, out);
 
+    std::cout << "***********************************\n";
+    stencil_run([&i, &j, &k, n, m, l](auto & in, auto & out) {
+            std::cout << std::setw(4) << out(0,0,0) << " ";
+            ++k;
+            if (k==l) {k=0; ++j; std::cout << "\n";}
+            if (j==m) {j=0; ++i; std::cout << "\n\n";}
+        }, halo_type<0,0,0>(), n, m, l, in, out);
+    std::cout << "***********************************\n";
+
+
+    bool result = true;
+    for (i = 1; i < n-1; ++i) {
+        for (j = 1; j < m-1; ++j) {
+            for (k = 1; k < l-1; ++k) {
+                auto v = in(i,j,k) - 6.* (in(i+1,j,k) + in(i-1,j,k)
+                                          + in(i,j+1,k) + in(i,j-1,k)
+                                          + in(i,j,k+1) + in(i,j,k-1));
+                if (out(i,j,k) != v) {
+                    std::cout << "Error in "
+                              << i << " "
+                              << j << " "
+                              << k << " : "
+                              << out(i,j,k) << " != "
+                              << v << "\n";
+                    result = false;
+                }
+            }
+        }
+    }
+
+    if (result) {
+        std::cout << "PASSED\n";
+    } else {
+        std::cout << "FAILED\n";
+    }
 }

@@ -33,9 +33,9 @@ struct storage_info_sol{
     }
 
     //recursion anchor
-    template<int First, typename First_Int, typename ... Ints>
-    constexpr int compute_index(std::integer_sequence< int,  First> , First_Int first_, Ints ... indices) const {
-        return Layout::template select<First>(first_, indices ...);
+    template<typename ... Ints>
+    constexpr int compute_index(std::integer_sequence< int > , Ints ... indices) const {
+        return 0;
     }
 
 private:

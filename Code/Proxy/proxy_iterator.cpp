@@ -5,36 +5,33 @@
 template <typename It0, typename It1>
 struct zip_proxy {
 
-    It0 it0;
-    It1 it1;
+    std::pair<It0, It1> m_zip;
+
 
     zip_proxy(It0 it0, It1 it1)
-        : it0(it0), it1(it1)
+        : m_zip(it0,it1)
     {}
 
-    std::pair<typename It0::value_type&, typename It1::value_type&> operator*() const {
-        return std::pair<typename It0::value_type&, typename It1::value_type&>(*it0, *it1);
+    std::pair<const It0, const It1> operator*() const {
+        return m_zip;
+    }
+
+    std::pair<It0, It1>& operator*() {
+        return m_zip;
     }
 
     zip_proxy& operator++() {
-        ++it0;
-        ++it1;
+        ++(m_zip.first);
+        ++(m_zip.second);
         return *this;
     }
-
-    zip_proxy const & operator++() const{
-        ++it0;
-        ++it1;
-        return *this;
-    }
-
 
 };
 
 
 template <typename It0, typename It1>
 bool operator!=(zip_proxy<It0,It1> const& i0, zip_proxy<It0, It1> const& i1) {
-    return (i0.it0 != i1.it0) and (i0.it1 != i1.it1);
+    return ((*i0).first != (*i1).first) and ((*i0).second != (*i1).second);
 }
 
 
@@ -50,6 +47,7 @@ int main() {
     auto zip0 = make_zip_proxy(iv.begin(), fv.begin());
     auto zip1 = make_zip_proxy(iv.end(), fv.end());
 
-    std::for_each(zip0, zip1, [](auto x) {x.first++; x.second++;});
-    std::for_each(zip0, zip1, [](auto x) {std::cout << x.first << ", " << x.second << "\n";});
+    std::for_each(zip0, zip1, [](auto& x) {*x.first += *x.second; *x.second *= 2;});
+    std::for_each(zip0, zip1, [](auto x) {std::cout << *x.first << ", " << *x.second << "\n";});
+
 }

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <chrono>
 
-
 namespace runtime {
     class base {
 
@@ -59,7 +58,7 @@ namespace runtime {
 
     inline void run(base & d, const int N) {
         auto start = std::chrono::high_resolution_clock::now();
-        for (volatile int i = 0; i < N; ++i) {
+        for (int i = 0; i < N; ++i) {
             d.process();
         }
         auto end = std::chrono::high_resolution_clock::now();
@@ -137,7 +136,7 @@ namespace compiletime {
     template <typename T>
     inline void run(T & d, const int N) {
         auto start = std::chrono::high_resolution_clock::now();
-        for (volatile int i = 0; i < N; ++i) {
+        for (int i = 0; i < N; ++i) {
             d.process();
         }
         auto end = std::chrono::high_resolution_clock::now();
@@ -155,7 +154,6 @@ int main(int argc, char** argv) {
 
 
     {
-        //runtime::base* c = new runtime::derived_i( 666 );
         runtime::derived_i* c = new runtime::derived_i( 666 );
 
         c->print_me();
@@ -182,7 +180,6 @@ int main(int argc, char** argv) {
 
 
     {
-        //runtime::base* c = new runtime::derived_c( 1.0, 2.0 );
         runtime::derived_c* c = new runtime::derived_c( 1.0, 2.0 );
 
         c->print_me();

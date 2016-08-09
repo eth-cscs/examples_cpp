@@ -60,15 +60,12 @@ public:
 };
 
 
-// class derived2 : base<derived2> {
-// };
-
-
 int main() {
 
     derived1 d1;
     std::cout << d1.process1(std::string("Hello World!")) << std::endl;
     std::cout << d1.process2(std::string("Hello World!")) << std::endl;
+    std::cout << d1.process2(std::string("Hello ... Well, you get the point")) << std::endl;
 
     d1.stats();
 

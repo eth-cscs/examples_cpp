@@ -30,7 +30,7 @@ int main() {
     auto zip0 = make_zip_proxy(iv.begin(), fv.begin());
     auto zip1 = make_zip_proxy(iv.end(), fv.end());
 
-    /* The exercise is to make the following code to work.
+    /* The exercise is to make the following code to work. */
     std::for_each(zip0, zip1, [](auto& x) {*(x.first) += *(x.second); *(x.second) *= 2;});
     std::for_each(zip0, zip1, [](auto x) {std::cout << *(x.first) << ", " << *(x.second) << "\n";});
 }

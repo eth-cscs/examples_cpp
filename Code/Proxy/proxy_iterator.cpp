@@ -8,19 +8,20 @@ struct zip_proxy {
 
     std::pair<It0, It1> m_zip;
 
-
     zip_proxy(It0 it0, It1 it1)
         : m_zip(it0,it1)
     {}
 
-    std::pair<const It0, const It1> operator*() const {
+    // The dereferencin operator returns the pair of iterators. This
+    // pair is not assumed to be changed, since that would mean to
+    // change the contaiing iterators, and that would basically break
+    // the semantics of the zipping. So we return now the pair as a
+    // value.
+    std::pair<It0, It1> operator*() const {
         return m_zip;
     }
 
-    std::pair<It0, It1>& operator*() {
-        return m_zip;
-    }
-
+    // Advancing both iterators
     zip_proxy& operator++() {
         ++(m_zip.first);
         ++(m_zip.second);
@@ -48,7 +49,10 @@ int main() {
     auto zip0 = make_zip_proxy(iv.begin(), fv.begin());
     auto zip1 = make_zip_proxy(iv.end(), fv.end());
 
-    std::for_each(zip0, zip1, [](auto& x) {*(x.first) += *(x.second); *(x.second) *= 2;});
-    std::for_each(zip0, zip1, [](auto x) {std::cout << *(x.first) << ", " << *(x.second) << "\n";});
+    std::for_each(zip0, zip1, [](auto x) {*(x.first) += *(x.second); *(x.second) *= 2;});
+    std::for_each(zip0, zip1, [](auto const x) {std::cout << (*(x.first))++ << ", " << (*(x.second))++ << "\n";});
+
+    std::for_each(make_zip_proxy(iv.cbegin(), fv.cbegin()), make_zip_proxy(iv.cend(), fv.cend()),
+                  [](auto const x) {std::cout << "\"" << *(x.first) << ", " << *(x.second) << "\"\n";});
 
 }

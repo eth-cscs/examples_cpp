@@ -6,6 +6,24 @@
 
 namespace graphlib {
 
+
+    /** What are the requirements on the Graph type?
+
+        member functions:
+        bool is_marked()
+        /unspecified/ unmark()
+        /unspecified/ set_as_marked()
+        /node reference/ operator[nodeid_t]
+
+        member types:
+        nodeid_t
+
+        nodes member functions:
+        nodeid_t id()
+        bool is_marked()
+        /unspecified/ mark();
+
+     */
     template <typename Graph>
     std::vector<typename Graph::nodeid_t> bfs(Graph& graph, typename Graph::nodeid_t source) {
         if (graph.is_marked()) graph.unmark();
@@ -20,15 +38,14 @@ namespace graphlib {
         stack.push(source);
         graph[source].mark();
 
-        std::cout << std::boolalpha << stack.empty() << "\n";
         while (!stack.empty()) {
             auto topid = stack.top();
             stack.pop();
-            auto &node = graph[topid];
+            auto node = graph[topid];
 
-            std::for_each(node.cbegin(), node.cend(),
-                          [&out, &stack, &graph](auto neighborid) {
-                              auto& neighbor = graph[neighborid];
+            std::for_each(node.begin(), node.end(),
+                          [&out, &stack, &graph](typename Graph::nodeid_t neighborid) {
+                              auto neighbor = graph[neighborid];
                               if (!neighbor.is_marked()) {
                                   stack.push(neighbor.id());
                                   neighbor.mark();

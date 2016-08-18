@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "graph.hpp"
 #include "bfs.hpp"
 
@@ -10,18 +11,23 @@ void test_from(Graph & G, Src s) {
     std::cout << "}\n";
 }
 
-int main() {
-    using namespace graphlib;
-
-    al_graph G{3,7,4,6};
-
-    G[3].neighborhs({4,6});
-    G[7].neighborhs({3});
-    G[4].neighborhs({7});
-    G[6].neighborhs({});
+template <typename GType>
+void run() {
+    GType G{3,7,4,6};
+    G[3].neighbors({4,6});
+    G[7].neighbors({3});
+    G[4].neighbors({7});
+    G[6].neighbors({});
 
     test_from(G, 7);
     test_from(G, 3);
     test_from(G, 4);
     test_from(G, 6);
+}
+
+int main() {
+    using namespace graphlib;
+
+    run<al_graph>();
+    run<am_graph>();
 }

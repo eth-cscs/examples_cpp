@@ -13,16 +13,18 @@ void test_from(Graph & G, Src s) {
 
 template <typename GType>
 void run() {
-    GType G{3,7,4,6};
-    G[3].neighbors({4,6});
-    G[7].neighbors({3});
-    G[4].neighbors({7});
-    G[6].neighbors({});
+    GType G{3,7,4,6,8};
+    G[3].neighbors({4,7});
+    G[7].neighbors({6,8});
+    G[4].neighbors({7,8});
+    G[6].neighbors({7,8});
+    G[8].neighbors({6});
 
     test_from(G, 7);
     test_from(G, 3);
     test_from(G, 4);
     test_from(G, 6);
+    test_from(G, 8);
 }
 
 int main() {

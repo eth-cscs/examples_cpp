@@ -13,7 +13,7 @@ namespace graphlib {
         bool is_marked()
         /unspecified/ unmark()
         /unspecified/ set_as_marked()
-        /node reference/ operator[nodeid_t]
+        /something that can mark a node/ operator[nodeid_t]
 
         member types:
         nodeid_t
@@ -28,9 +28,9 @@ namespace graphlib {
     std::vector<typename Graph::nodeid_t> bfs(Graph& graph, typename Graph::nodeid_t source) {
         if (graph.is_marked()) graph.unmark();
         // the following set the graph in a marked state, since we want to
-        // karm individual nodes without having to access them everytime
+        // mark individual nodes without having to access them everytime
         // from the IDs of the nodes we already have in our hands later
-        // on.
+        // on. So the graph class may be not
         graph.set_as_marked();
         std::vector<typename Graph::nodeid_t> out{source};
 
@@ -44,15 +44,18 @@ namespace graphlib {
             auto node = graph[topid];
 
             std::for_each(node.begin(), node.end(),
-                          [&out, &stack, &graph](typename Graph::nodeid_t neighborid) {
-                              auto neighbor = graph[neighborid];
+                          [&out, &stack, &graph](auto neighborid) {
+                              // the next decltype(auto) is to support
+                              // the case in which operator[] returns
+                              // a reference or a proxy object passed
+                              // back by value
+                              decltype(auto) neighbor = graph[neighborid];
                               if (!neighbor.is_marked()) {
                                   stack.push(neighbor.id());
                                   neighbor.mark();
                                   out.push_back(neighbor.id());
                               }
-                          }
-                          );
+                          });
         }
         return out;
     }

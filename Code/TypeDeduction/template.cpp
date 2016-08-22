@@ -60,7 +60,7 @@ int main() {
     foo(y);
     SHOW(x);
 
-    foo<int&>(y);
+    foo<int&>(x);
     SHOW(x);
 
 

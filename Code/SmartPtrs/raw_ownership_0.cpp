@@ -1,45 +1,41 @@
 #include <utility>
-#include <algorithm>
 
 class Owner {
 
 private:
-	int m_size;
 	double* m_data;
-
+	
 public:
-	Owner(const unsigned int i_size):
-		m_size(i_size),
-		m_data(new double[i_size])
-		{}
-
-	Owner(const Owner& i_owner):
-		m_size(i_owner.m_size),
-		m_data(new double[i_owner.m_size])
+	Owner(const double i_data):
+		m_data(new double(i_data))
 		{
-			std::copy(i_owner.m_data,i_owner.m_data+m_size,m_data);
 		}
 
+	Owner(const Owner& i_owner):
+		m_data(new double)
+		{
+			*m_data = *i_owner.m_data;
+		}
+	
 	Owner(Owner&& i_owner):
-		m_size(i_owner.m_size),
 		m_data(i_owner.m_data)
 		{
 			i_owner.m_data = nullptr;
 		}
 	
 	~Owner() {
-		if(m_data != nullptr)
-			delete [] m_data;
+		if(m_data!=nullptr)
+			delete m_data;
 	}
-
+	
+	double get_data() const { return *m_data; }	
+	
 	Owner& operator=(const Owner& i_owner){
-		m_size = i_owner.m_size;
-		m_data = new double[i_owner.m_size];
-		std::copy(i_owner.m_data,i_owner.m_data+m_size,m_data);
+		m_data = new double;
+		*m_data = *i_owner.m_data;
 	}
 
 	Owner& operator=(Owner&& i_owner){
-		m_size = i_owner.m_size;
 		m_data = i_owner.m_data;
 		i_owner.m_data = nullptr;
 	}
@@ -51,8 +47,8 @@ void f(const Owner& i_owner) {
 }
 
 int main() {
-	const unsigned int size = 10;
-	Owner first_owner(size);
+	Owner first_owner(23.);	
 	Owner second_owner = first_owner;
 	Owner third_owner(std::move(first_owner));
+	f(third_owner);
 }

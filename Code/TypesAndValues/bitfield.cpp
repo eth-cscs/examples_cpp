@@ -10,6 +10,8 @@ struct instr_t {
     basic_type act   : 3;
     basic_type cell  : 4;
     basic_type : sizeof(basic_type)*8-21; // unused (not necessary at the pad)
+    basic_type :0; // Force starting a new unsigned: not really necessary here
+    basic_type other; // regular data member
 };
 
 std::ostream& operator<<(std::ostream& s, instr_t a) {
@@ -24,9 +26,11 @@ std::ostream& operator<<(std::ostream& s, instr_t a) {
 
 int main() {
     SHOW(sizeof(instr_t));
-    instr_t x = instr_t{1,2,5,3,3,4,12};
+    instr_t x = instr_t{33,34,5,3,3,4,12};
     for (int i=0; i<10; ++i) {
         SHOW(x);
         x.cond1 += 1;
     }
+
+    static_assert(instr_t{10}.oper == 2, "");
 }

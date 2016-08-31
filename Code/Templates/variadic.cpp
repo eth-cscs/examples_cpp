@@ -11,6 +11,7 @@ template <typename ...T>
 struct B {
     using tuple = std::tuple<T...>;
     using tuple_of_vector = std::tuple<std::vector<T>...>;
+    using pairs = std::tuple<std::pair<T,std::vector<T>>...>;gg
 
     tuple _data;
 

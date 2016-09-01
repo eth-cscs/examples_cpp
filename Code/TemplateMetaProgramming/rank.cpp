@@ -44,7 +44,7 @@ struct do_loop<2> {
 template <>
 struct do_loop<3> {
     template <typename T, typename F>
-    static void go(T& x, F f) {
+    static void go(T& x, F&& f) {
         for (int i = 0; i < std::extent<T,0>::value; ++i) {
             for (int j = 0; j < std::extent<T,1>::value; ++j) {
                 for (int k = 0; k < std::extent<T,2>::value; ++k) {
@@ -55,9 +55,9 @@ struct do_loop<3> {
     }
 };
 
-template <typename T>
-void looping(T x) {
-    do_loop<rank<T>::value>::go(x);
+template <typename T, typename F>
+void looping(T& x, F&& f) {
+    do_loop<rank<T>::value>::go(x, std::forward<F>(f));
 }
 
 int main() {
@@ -68,9 +68,13 @@ int main() {
     std::cout << std::extent<decltype(x), 0>::value << ", "
               << std::extent<decltype(x), 1>::value << "\n";
 
-    do_loop<std::rank<decltype(x)>::value>::go(x,
-                                               [&i](int& v) {
-                                                   std::cout << i << " ";
-                                                   i++;
-                                               });
+    do_loop<rank<decltype(x)>::value>::go(x,
+                                          [&i](int& v) {
+                                              std::cout << i << " ";
+                                              i++;
+                                          });
+    looping(x, [&i](int& v) {
+            std::cout << i << " ";
+            i++;
+        });
 }

@@ -1,4 +1,4 @@
-#include <iostream>
+#include "../show.h"
 
 struct A {
 
@@ -8,28 +8,25 @@ struct A {
     A(int _a) :a(_a), p(&a) {}
 
     void operator()() {
-        auto f = [=]() {int a=0; a++; std::cout << a << std::endl;};
-        f();
+        DO((auto f = [=]() {int a=0; a++; std::cout << a << std::endl;}));
+        DO((f()));
     }
 
     void alternate() { // !! WARNING: only this is copied by value
-        auto f = [=]() {a++; std::cout << a << std::endl;};
-        f();
+        DO((auto f = [=]() {a++; std::cout << a << std::endl;}));
+        DO((f()));
     }
 
     void alternate2() { // This is the same as alternate
-        auto f = [=]() {this->a++; std::cout << this->a << std::endl;};
-        f();
+        DO((auto f = [=]() {this->a++; std::cout << this->a << std::endl;}));
+        DO((f()));
     }
 
     void safe_version() {
-        int a = 5;
-        auto x = [=] () {
-            std::cout << this->a << std::endl;
-            std::cout << a << std::endl;
-        };
-        a = 3;
-        x();
+        DO((int a = 5));
+        DO((auto x = [=] () { std::cout << this->a << std::endl; std::cout << a << std::endl; }));
+        DO((a = 3));
+        DO((x()));
     }
 
     void out() const {
@@ -42,16 +39,16 @@ int main() {
 
     A a(10);
 
-    a();
+    DO((a()));
 
-    a.out();
+    DO((a.out()));
 
-    a.alternate();
-    a.alternate2();
+    DO((a.alternate()));
+    DO((a.alternate2()));
 
-    a.out();
+    DO((a.out()));
 
-    a.safe_version();
-    a.out();
+    DO((a.safe_version()));
+    DO((a.out()));
     return 0;
 }

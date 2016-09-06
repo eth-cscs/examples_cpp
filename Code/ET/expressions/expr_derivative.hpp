@@ -3,12 +3,32 @@
 namespace expressions{
 
     template <typename T1>
-    struct expr_derivative;
+    struct expr_derivative{
+        using value_t = int;
+
+        template <typename T>
+        constexpr T operator()(T t_) const {
+            return 0;
+        }
+
+        std::string to_string() const {
+            return std::string(" 0 ");
+        }
+
+        //solution exercice 1
+        constexpr int sum_ops() const {
+            return 0;
+        }
+        constexpr int mult_ops() const {
+            return 0;
+        }
+        //////////////////////
+    };
 
 template <typename T1>
 struct expr_derivative<expr_derivative<T1>>{
 
-    using value_t = decltype(D(D(T1())));
+    using value_t = expr_derivative<typename expr_derivative<T1>::value_t>;//decltype(D(D(T1())));
 
     template <typename T>
     constexpr auto operator() (T t_) const{
@@ -16,7 +36,7 @@ struct expr_derivative<expr_derivative<T1>>{
     }
 
     std::string to_string() const {
-        return std::string(" D(") + T1().to_string() + ") ";
+        return std::string(" D^2(") + T1().to_string() + ") ";
     }
 
     //solution exercice 1
@@ -25,30 +45,6 @@ struct expr_derivative<expr_derivative<T1>>{
     }
     constexpr int mult_ops() const {
         return value_t().mult_ops();
-    }
-    //////////////////////
-};
-
-
-template <>
-struct expr_derivative<expr_derivative<p> >{
-    using value_t = int;
-
-    template <typename T>
-    constexpr T operator()(T t_) const {
-        return 0;
-    }
-
-    std::string to_string() const {
-        return std::string(" 0 ");
-    }
-
-    //solution exercice 1
-    constexpr int sum_ops() const {
-        return 0;
-    }
-    constexpr int mult_ops() const {
-        return 0;
     }
     //////////////////////
 };

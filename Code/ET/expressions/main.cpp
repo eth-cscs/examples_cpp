@@ -7,7 +7,7 @@
 
 using namespace expressions;
 int main(){
-    constexpr auto expr = x*x*x;
+    constexpr auto expr = D(D(x*x+x));
     std::cout<<expr.to_string();
     std::cout<<" = ";
     std::cout<< expr(3)<<std::endl;

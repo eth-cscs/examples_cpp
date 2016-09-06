@@ -13,7 +13,7 @@
 
 int main()
 {
-    // std::cout<<register_product<float>::reg<<register_product<double>::reg<<"\n";
+    //std::cout<<register_product<float>::reg<<register_product<double>::reg<<"\n";
     // register_product<float>::reg;
     // register_product<double>::reg;
 }

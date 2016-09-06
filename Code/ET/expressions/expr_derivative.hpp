@@ -29,6 +29,31 @@ struct expr_derivative<expr_derivative<T1>>{
     //////////////////////
 };
 
+
+template <>
+struct expr_derivative<expr_derivative<p> >{
+    using value_t = int;
+
+    template <typename T>
+    constexpr T operator()(T t_) const {
+        return 0;
+    }
+
+    std::string to_string() const {
+        return std::string(" 0 ");
+    }
+
+    //solution exercice 1
+    constexpr int sum_ops() const {
+        return 0;
+    }
+    constexpr int mult_ops() const {
+        return 0;
+    }
+    //////////////////////
+};
+
+
 template<>
 struct expr_derivative<p>{
 

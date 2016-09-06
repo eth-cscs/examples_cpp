@@ -28,6 +28,12 @@ struct movable {
         std::cout << "Copy\n";
     }
 
+    ~movable() {
+        if (pv) {
+            delete [] pv;
+        }
+    }
+
     int size() const {return s;}
 };
 

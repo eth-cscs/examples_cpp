@@ -16,7 +16,7 @@ namespace my_library {
 
         template<typename T, typename VOID=void> // this "void" is idiomatic
         struct sum {
-            static std::string add(T const &, T const &) { throw 666; }
+            static std::string add(T const &, T const &) { throw 42; }
         };
 
         template<typename T>

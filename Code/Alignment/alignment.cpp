@@ -21,6 +21,11 @@ struct Y {
     char c;
 };
 
+struct Z {
+    char a, b, a1, b1, c, a2, b2, a12, b12;
+    int d;
+};
+
 template <typename T>
 bool check_align(T const* const p, unsigned int alignment) {
     return ((reinterpret_cast<uintptr_t>(static_cast<void const* const>(p))&(alignment-1)) == 0);
@@ -55,9 +60,12 @@ int main() {
     SHOW_BOOL(check_align(p, 128));
     SHOW_BOOL(check_align(&p1, 128));
 
+    std::cout << "--------------------------------\n";
     SHOW(sizeof(X));
     SHOW((sizeof(char) + sizeof(int) + sizeof(char)))
     SHOW(sizeof(Y));
+    SHOW(sizeof(Z));
+    std::cout << "--------------------------------\n";
 
     int *ip = new int{45};
     SHOW_BOOL(check_align(ip, 128));

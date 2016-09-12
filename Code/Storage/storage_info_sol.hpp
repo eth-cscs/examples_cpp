@@ -6,18 +6,18 @@
 template <typename Layout>
 struct storage_info_sol{
 
-    typedef Layout layout;
+    typedef Layout layout_t;
 
     template <typename ... Ints>
     constexpr storage_info_sol(int first_, Ints ... dims_) :
         m_dims{first_, dims_ ...}
     {
-        static_assert((sizeof...(Ints)+1==Layout::length), "error");
+        static_assert((sizeof...(Ints)+1==layout_t::length), "error");
     }
 
     constexpr storage_info_sol(storage_info_sol const& other) = default;
 
-    static constexpr int size(){return Layout::length;}
+    static constexpr int size(){return layout_t::length;}
 
     template<int Coord>
     constexpr int dim() const {return m_dims[Coord];}
@@ -28,8 +28,12 @@ struct storage_info_sol{
     }
 
     template<int First, int ... Indices, typename First_Int, typename ... Ints>
-    constexpr int compute_index(std::integer_sequence< int,  First, Indices ... > , First_Int first_, Ints ... indices) const {
-        return Layout::template select<First>(first_, indices ...) + Layout::template select<First>(m_dims) * compute_index(std::integer_sequence<int, Indices ...>(), first_, indices ...);
+    constexpr int compute_index(std::integer_sequence< int,  First, Indices ... > ,
+                                First_Int first_, Ints ... indices) const {
+
+        return layout_t::template select<First>(first_, indices ...)
+            + layout_t::template select<First>(m_dims)
+            * compute_index(std::integer_sequence<int, Indices ...>(), first_, indices ...);
     }
 
     //recursion anchor
@@ -39,7 +43,7 @@ struct storage_info_sol{
     }
 
 private:
-    int m_dims[Layout::length];
+    int m_dims[layout_t::length];
     constexpr storage_info_sol(){}
 };
 

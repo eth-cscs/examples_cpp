@@ -14,9 +14,10 @@ struct S {
 
 int F::m_f = 10 * D::m_d ;
 
+int S::c = 5;
+
 int D::m_d = 10 * S::c;
 
-int S::c = 5;
 
 int main()
 {

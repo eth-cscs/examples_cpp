@@ -6,11 +6,6 @@
 #include "storage.hpp"
 #include <iostream>
 
-template<int T>
-struct static_int{
-    int val=T;
-};
-
 int main(){
 
     //run-time instance

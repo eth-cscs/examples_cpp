@@ -24,20 +24,15 @@ namespace graphlib {
         /unspecified/ mark();
 
      */
-    template <typename Graph>
+    template <typename Graph, typename Marker, typename IsMarked>
     std::vector<typename Graph::nodeid_t>
-    bfs(Graph& graph, typename Graph::nodeid_t source) {
-        if (graph.is_marked()) graph.unmark();
-        // the following set the graph in a marked state, since we want to
-        // mark individual nodes without having to access them everytime
-        // from the IDs of the nodes we already have in our hands later
-        // on. So the graph class may be not
-        graph.set_as_marked();
+    bfs(Graph& graph, typename Graph::nodeid_t source, Marker&& mark, IsMarked&& check_mark)
+    {
         std::vector<typename Graph::nodeid_t> out{source};
 
         std::stack<typename Graph::nodeid_t> stack;
         stack.push(source);
-        graph[source].mark();
+        mark(graph[source].id());
 
         while (!stack.empty()) {
             auto topid = stack.top();
@@ -45,15 +40,15 @@ namespace graphlib {
             auto node = graph[topid];
 
             std::for_each(node.begin(), node.end(),
-                          [&out, &stack, &graph](auto neighborid) {
+                          [&out, &stack, &graph, &mark, &check_mark](auto neighborid) {
                               // the next decltype(auto) is to support
                               // the case in which operator[] returns
                               // a reference or a proxy object passed
                               // back by value
                               decltype(auto) neighbor = graph[neighborid];
-                              if (!neighbor.is_marked()) {
+                              if (!check_mark(neighbor.id())) {
                                   stack.push(neighbor.id());
-                                  neighbor.mark();
+                                  mark(neighbor.id());
                                   out.push_back(neighbor.id());
                               }
                           });

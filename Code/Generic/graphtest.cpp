@@ -5,7 +5,7 @@
 
 template <typename Graph, typename Src>
 void test_from(Graph & G, Src s) {
-    auto r1 = bfs(G, s);
+    auto&& r1 = bfs(G, s);
     std::cout << "Starting at " << s << ": {";
     for (auto i: r1) {std::cout << i << ", ";}
     std::cout << "}\n";

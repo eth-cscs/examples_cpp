@@ -1,5 +1,5 @@
 //Exercice:
-//transform the heaop allocator  to a stack allocator
+//transform the heap allocator  to a stack allocator
 
 #include<vector>
 #include<cstdlib>
@@ -19,5 +19,5 @@ struct my_heap_allocator{
 main(){
     std::vector<int,  my_heap_allocator<int> > q_({0,1,2,3,4,5,6,7});
     assert(q_[2]==2);
-    //std::vector<int,  my_allocator<int> > q_(101); //throws bad_alloc
+    //std::vector<int,  my_heap_allocator<int> > q_(101); //throws bad_alloc
 }

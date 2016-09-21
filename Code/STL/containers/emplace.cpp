@@ -13,9 +13,9 @@ int main(){
 
     std::vector<my_class> m;
     m.reserve(2);
-    // m.push_back( my_class(1,2.) );
-    // m.push_back( my_class(1,2.) );
-    m.emplace_back( 1,2. );
-    m.emplace_back( 1,2. );
+    m.push_back( my_class(1,2.) );
+    m.push_back( my_class(1,2.) );
+    //m.emplace_back( 1,2. );
+    //m.emplace_back( 1,2. );
     //m.emplace(m.begin(), 1, 2. );
 }

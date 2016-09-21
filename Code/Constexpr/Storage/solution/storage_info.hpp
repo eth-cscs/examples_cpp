@@ -1,7 +1,7 @@
 #pragma once
 #include <utility>
 #include <cassert>
-#include "layout_map.hpp"
+
 //substitute Size with a type containing a "layout" array
 template <int Size>
 struct storage_info{

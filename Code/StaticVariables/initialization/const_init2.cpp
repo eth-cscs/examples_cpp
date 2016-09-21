@@ -26,6 +26,4 @@ int main()
     std::cout << "d = " << d << '\n';
     std::cout << "D::m_d::value = " << D::m_d.value << '\n';
     std::cout << "S::c::value = " << S::c.value << '\n';
-    //std::array<int, S::c> a1; // OK: S::c is a constant expression
-//  std::array<int, d> a2;    // error: d is not a constant expression
 }

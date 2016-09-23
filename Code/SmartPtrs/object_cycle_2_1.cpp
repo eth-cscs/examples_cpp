@@ -6,7 +6,7 @@ struct B;
 struct A {
 
 	~A(){
-		std::cout<<"A dctor"<<std::endl;
+		std::cout<<"A dtor"<<std::endl;
 	}
 	
 	std::shared_ptr<B> m_ptr;
@@ -15,9 +15,10 @@ struct A {
 struct B {
 
 	~B(){
-		std::cout<<"B dctor"<<std::endl;
+		std::cout<<"B dtor"<<std::endl;
 	}
-
+	
+	// Try to change data member type and check dtor usage
 //	std::weak_ptr<A> m_ptr;
 	std::shared_ptr<A> m_ptr;
 };

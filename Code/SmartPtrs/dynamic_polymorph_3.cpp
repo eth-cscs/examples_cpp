@@ -6,7 +6,7 @@ struct Base{
 	virtual void f(void) const { std::cout<<"Call base method"<<std::endl; }
 
 	virtual ~Base(){
-		std::cout<<"Call base dctor"<<std::endl;
+		std::cout<<"Call base dtor"<<std::endl;
 	}
 
 };
@@ -17,7 +17,7 @@ struct Derived : public Base {
 	void f(void) const { std::cout<<"Call derived method"<<std::endl; }
 
 	~Derived(){
-		std::cout<<"Call derived dctor"<<std::endl;
+		std::cout<<"Call derived dtor"<<std::endl;
 	}
 
 };

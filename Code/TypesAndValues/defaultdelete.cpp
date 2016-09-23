@@ -26,10 +26,11 @@ void foo(int) = delete;
 int main() {
     X x{};
 
-    //X y(x); automatic copy constructor deleted by move assignment
+    //X y(x); // automatic copy constructor deleted by move assignment
     X1 x1{};
 
     X1 y1(x1);
+    X1 y2(std::move(x1));
 
     Y u{};
     Y w(u);

@@ -1,4 +1,4 @@
-template <typename T>
+template <typename TT>
 struct expr_derivative{
     using value_t = int;
 

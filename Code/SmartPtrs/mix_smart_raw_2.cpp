@@ -37,7 +37,7 @@ int main(){
 
 	// 4 - How many pointers are pointing the same resource?
 	assert(sp1.use_count() == 1);
-	assert(sp2.use_count() == 0);
+	assert(sp2.use_count() == 1);
 	assert(sp3.use_count() == 1);
 
 	// 5 - Create a shared_ptr to array

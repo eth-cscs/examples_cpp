@@ -1,5 +1,4 @@
 #include <memory>
-#include <iostream>
 #include <cassert>
 
 class Object{
@@ -21,8 +20,6 @@ private:
 	int m_value;
 	
 };
-
-// TODO: usare show di Mauro
 
 int main(){
 	
@@ -46,7 +43,7 @@ int main(){
 	// 5 - Create a shared_ptr to array
 	std::shared_ptr<Object> sp4(new Object[10]);
 	
-	// Find the bugs! (Hint: run with valgrind) 
+	// Find the bugs!
 }
 
 

@@ -8,4 +8,6 @@ int main(){
     std::cout<<v_.capacity()<<" "; // 4002
     v_.shrink_to_fit();
     std::cout<<v_.capacity()<<"\n"; // 2002
+    v_.reserve(2004);v_.push_back('d');
+    std::cout<<v_.capacity()<<"\n"; // 2005
 }

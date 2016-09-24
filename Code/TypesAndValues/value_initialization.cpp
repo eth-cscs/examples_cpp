@@ -1,7 +1,7 @@
 #include "../show.h"
 
 struct A {
-    A() { std::cout << "Default constuctor of A\n";}
+    A(int =10) { std::cout << "Default constuctor of A\n";}
 };
 
 struct B {

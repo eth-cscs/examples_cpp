@@ -168,10 +168,13 @@ namespace stencil_stuff {
      */
     template < typename Operator, int I, int J, int K, typename ...Data>
     void stencil_run(Operator op, halo_type<I,J,K>,
-                     std::size_t n, std::size_t m, std::size_t l,
                      Data & ...data) {
         using namespace _detail;
         auto proxies = std::make_tuple(proxy<Data>(data)...);
+
+        size_t n = std::get<0>(std::make_tuple(data...)).n();
+        size_t m = std::get<0>(std::make_tuple(data...)).m();
+        size_t l = std::get<0>(std::make_tuple(data...)).l();
 
         for (int i = I; i < n-I; ++i) {
             for (int j = J; j < m-J; ++j) {
@@ -203,32 +206,35 @@ int main(int argc, char** argv) {
             ++k;
             if (k==l) {k=0; ++j;}
             if (j==m) {j=0; ++i;}
-        }, halo_type<0,0,0>(), n, m, l, in, out);
+        }, halo_type<0,0,0>(), in, out);
 
-    std::cout << "***********************************\n";
-    stencil_run([&i, &j, &k, n, m, l](auto & in, auto & out) {
-            std::cout << std::setw(4) << in(0,0,0) << " ";
-            ++k;
-            if (k==l) {k=0; ++j; std::cout << "\n";}
-            if (j==m) {j=0; ++i; std::cout << "\n\n";}
-        }, halo_type<0,0,0>(), n, m, l, in, out);
-    std::cout << "***********************************\n";
+    if (n*m*l < 200) {
+        std::cout << "***********************************\n";
+        stencil_run([&i, &j, &k, n, m, l](auto & in, auto & out) {
+                std::cout << std::setw(4) << in(0,0,0) << " ";
+                ++k;
+                if (k==l) {k=0; ++j; std::cout << "\n";}
+                if (j==m) {j=0; ++i; std::cout << "\n\n";}
+            }, halo_type<0,0,0>(), in, out);
+        std::cout << "***********************************\n";
+    }
 
     stencil_run([](auto const& in, auto & out) {
         out(0,0,0) =  in(0,0,0) - 6.* (in(1,0,0) + in(-1,0,0)
                                       + in(0,1,0) + in(0,-1,0)
                                       + in(0,0,1) + in(0,0,-1));
-        }, halo_type<1,1,1>(), n, m, l, in, out);
+        }, halo_type<1,1,1>(), in, out);
 
-    std::cout << "***********************************\n";
-    stencil_run([&i, &j, &k, n, m, l](auto & in, auto & out) {
-            std::cout << std::setw(4) << out(0,0,0) << " ";
-            ++k;
-            if (k==l) {k=0; ++j; std::cout << "\n";}
-            if (j==m) {j=0; ++i; std::cout << "\n\n";}
-        }, halo_type<0,0,0>(), n, m, l, in, out);
-    std::cout << "***********************************\n";
-
+    if (n*m*l < 200) {
+        std::cout << "***********************************\n";
+        stencil_run([&i, &j, &k, n, m, l](auto & in, auto & out) {
+                std::cout << std::setw(4) << out(0,0,0) << " ";
+                ++k;
+                if (k==l) {k=0; ++j; std::cout << "\n";}
+                if (j==m) {j=0; ++i; std::cout << "\n\n";}
+            }, halo_type<0,0,0>(), in, out);
+        std::cout << "***********************************\n";
+    }
 
     bool result = true;
     for (i = 1; i < n-1; ++i) {

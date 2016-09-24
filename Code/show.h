@@ -6,4 +6,7 @@
 #define SHOW_BOOL(X) std::cout << #X << " :  " << std::boolalpha << X << "\n";
 #define SHOW_PREFIX(P,X) std::cout << P << "\n" << #X << "\n" << X << "\n";
 #define OUT(B) std::ostream& operator<<(std::ostream &s, B a)
+
+#define __DODO(x) x
+#define DO(x) std::cout << #x << "\n"; __DODO x
 #endif

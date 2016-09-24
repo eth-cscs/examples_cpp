@@ -6,7 +6,19 @@ Return foo(T x) {
 }
 
 template <typename T=double, int size=10>
-class my_container {};
+struct my_container {
+    my_container() {std::cout << size << "\n";}
+};
+
+template <typename T>
+struct my_container<T, 10> {
+    my_container() {std::cout << "THIS IS JUST 10\n";}
+};
+
+template <typename T>
+struct my_container<T, 15> {
+    my_container() {std::cout << "THIS IS JUST 15\n";}
+};
 
 int main() {
 
@@ -17,4 +29,9 @@ int main() {
     // For classes
     my_container<> x; // a my_container of doubles
                       // <>  are needed since my_container is a template!
+    my_container<int> y;
+    my_container<char, 10> z;
+    my_container<float,30> u;
+    my_container<int, 15> v;
+
 }

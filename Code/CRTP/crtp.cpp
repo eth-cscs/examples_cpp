@@ -1,7 +1,6 @@
 #include <iostream>
 #include <chrono>
 
-
 namespace runtime {
     class base {
 
@@ -57,9 +56,10 @@ namespace runtime {
         }
     };
 
+    /** run virtual members */
     inline void run(base & d, const int N) {
         auto start = std::chrono::high_resolution_clock::now();
-        for (volatile int i = 0; i < N; ++i) {
+        for (int i = 0; i < N; ++i) {
             d.process();
         }
         auto end = std::chrono::high_resolution_clock::now();
@@ -80,11 +80,11 @@ namespace compiletime {
         {}
 
         void print_me() const {
-            static_cast<Derived*>(this)->print_me();
+            static_cast<const Derived*>(this)->print_me_();
         }
 
         void process() {
-            static_cast<Derived*>(this)->process();
+            static_cast<Derived*>(this)->process_();
         }
     };
 
@@ -98,14 +98,14 @@ namespace compiletime {
             , m_value(v)
         {}
 
-        void print_me() const {
+        void print_me_() const {
             std::cout << "Derived >compiletime::derived_i"
                       << "< value: "
                       << m_value
                       << std::endl;
         }
 
-        void process() {
+        void process_() {
             m_value=m_value*m_value/100000;
         }
     };
@@ -121,24 +121,38 @@ namespace compiletime {
             , m_b(b)
         {}
 
-        void print_me() const {
+        void print_me_() const {
             std::cout << "Derived >compiletime::derived_c"
                       << "< value: ("
                       << m_a << " + i" << m_b << ")"
                       << std::endl;
         }
 
-        void process() {
+        void process_() {
             m_a = m_a + 1;
             m_b = m_b + 1;
         }
     };
 
+    /** run base classes members */
     template <typename T>
     inline void run(T & d, const int N) {
         auto start = std::chrono::high_resolution_clock::now();
-        for (volatile int i = 0; i < N; ++i) {
+        for (int i = 0; i < N; ++i) {
             d.process();
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff = end-start;
+        std::cout << "Time: " << diff.count() << std::endl;
+    }
+
+
+    /** Run native members */
+    template <typename T>
+    inline void run_(T & d, const int N) {
+        auto start = std::chrono::high_resolution_clock::now();
+        for (int i = 0; i < N; ++i) {
+            d.process_();
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end-start;
@@ -155,7 +169,6 @@ int main(int argc, char** argv) {
 
 
     {
-        //runtime::base* c = new runtime::derived_i( 666 );
         runtime::derived_i* c = new runtime::derived_i( 666 );
 
         c->print_me();
@@ -176,13 +189,20 @@ int main(int argc, char** argv) {
         compiletime::run(*d, N);
 
         d->print_me();
+
+
+        std::cout << "\nCall the native method od derived_i\n";
+        d->print_me();
+
+        compiletime::run_(*d, N);
+
+        d->print_me();
     }
 
     std::cout << std::endl;
 
 
     {
-        //runtime::base* c = new runtime::derived_c( 1.0, 2.0 );
         runtime::derived_c* c = new runtime::derived_c( 1.0, 2.0 );
 
         c->print_me();
@@ -200,6 +220,13 @@ int main(int argc, char** argv) {
         c->print_me();
 
         compiletime::run(*c, N);
+
+        c->print_me();
+
+        std::cout << "\nCall the native method od derived_c\n";
+        c->print_me();
+
+        compiletime::run_(*c, N);
 
         c->print_me();
     }

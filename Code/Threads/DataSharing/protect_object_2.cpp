@@ -3,6 +3,7 @@
 #include <iostream>
 
 class data_struct{
+
 	int m_data;
 	
 public:
@@ -18,7 +19,7 @@ public:
 		std::cout<<"work_on_data terminates on local data = "<<m_data<<std::endl;
 		std::cout<<"Running work_on_data method done!"<<std::endl;
 	}
-	
+
 	void set_data(int i_data) {
 		m_data = i_data;
 	}
@@ -44,7 +45,6 @@ public:
 		std::this_thread::sleep_for(std::chrono::seconds(6));
 		std::cout<<"work_on_data terminates on local data = "<<m_data<<std::endl;
 		std::cout<<"Running work_on_data method done!"<<std::endl;
-		return;
 	}
 
 	void set_data(int i_data) {

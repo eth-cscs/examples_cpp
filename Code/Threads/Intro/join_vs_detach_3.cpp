@@ -1,6 +1,6 @@
 #include <iostream>
 #include <thread>
-#include <unistd.h>
+#include <chrono>
 #include <cassert>
 
 struct func
@@ -14,19 +14,18 @@ struct func
 	
 	void operator()() const {
 
-		std::cout<<"Thread "<<m_id<<" starts to work..."<<std::endl;
-		sleep(5);
-		std::cout<<"Thread "<<m_id<<" has finished!"<<std::endl;
+		std::cout<<"Thread with f "<<m_id<<" starts operator"<<std::endl;
+		std::this_thread::sleep_for(std::chrono::seconds(5));
+		std::cout<<"Thread with f "<<m_id<<" operator call completed!"<<std::endl;
 	}
 	
 };
 
 int main()
 {
-
 	func f1(1);
 	func f2(2);
-	
+
 	std::cout<<"Create thread 1"<<std::endl;
 	std::thread t1(f1);
 	assert(t1.joinable());
@@ -49,6 +48,6 @@ int main()
 
 	std::cout<<"Thread 2 detached"<<std::endl;
 	
-	sleep(10); // NOTE: what if we don't wait for the thread to finish?
+    // NOTE: try to comment out the join or detach call
 	
 }

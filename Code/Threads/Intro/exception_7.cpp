@@ -11,21 +11,21 @@ void f() {
 
 void throwing_f() {
 
-//	throw std::exception();
+	throw std::exception();
 
 }
-
-void 
 
 int main() {
 
 	std::thread t(f);
 
+	// Try to comment out exception handling code
 	try {
-		throwing_f();
+	    throwing_f();
 	}
 	catch(...){
-		t.join();
+
 	}
 	t.join();
+
 }

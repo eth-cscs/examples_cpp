@@ -47,9 +47,16 @@ g++ -o hello_world_1 hello_world_1.cpp -std=c++11 -pthread
    as in the example or is there something available?
    6- What about copy, assignement, move, etc operators for protected data
    struct, do we need to implement them to avoid problem with mutex data member?    
+   7- Besides std::adopt_lock which options are available?
+   8- std::try_lock() and friends?
+
+#3 (
 
 TODO: 
 1- #2 Example with lock hierarchy
 2- #2 Fix logs and case list
+3- #2 Create struct hierarchy
+4- Add a note/example about std::shared_mutex (C++17)
+5- Introduce exception handling!
 
 General questions:	  

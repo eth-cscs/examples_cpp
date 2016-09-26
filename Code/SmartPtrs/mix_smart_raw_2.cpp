@@ -1,5 +1,4 @@
 #include <memory>
-#include <iostream>
 #include <cassert>
 
 class Object{
@@ -22,8 +21,6 @@ private:
 	
 };
 
-// TODO: usare show di Mauro
-
 int main(){
 	
 	// 0 - Create managed resource, manager object and first shared pointer
@@ -40,13 +37,13 @@ int main(){
 
 	// 4 - How many pointers are pointing the same resource?
 	assert(sp1.use_count() == 1);
-	assert(sp2.use_count() == 0);
+	assert(sp2.use_count() == 1);
 	assert(sp3.use_count() == 1);
 
 	// 5 - Create a shared_ptr to array
 	std::shared_ptr<Object> sp4(new Object[10]);
 	
-	// Find the bugs! (Hint: run with valgrind) 
+	// Find the bugs!
 }
 
 

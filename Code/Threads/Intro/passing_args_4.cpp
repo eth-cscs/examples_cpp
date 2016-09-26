@@ -1,6 +1,7 @@
 #include <thread>
+#include <memory>
 #include <iostream>
-
+#include <cassert>
 
 class X{
 
@@ -23,12 +24,17 @@ void setX_ptr(int i_int, X* io_x)
 	io_x->set(i_int);
 }
 
+void setX_move(int i_int,std::unique_ptr<X> i_ptr)
+{
+	i_ptr->set(i_int);
+}
+
 int main()
 {
 	X x;
-	
+
+	// 1- Check pass by reference mechanism
 	std::thread t(setX, 1, std::ref(x));
-//	std::thread t(setX, 1, x); // Error explanation
 	t.join();
 	std::cout<<"x int value: "<<x.get()<<std::endl;
 
@@ -39,4 +45,11 @@ int main()
 	t = std::thread(&X::set, &x, 3);
 	t.join();
 	std::cout<<"x int value: "<<x.get()<<std::endl;
+
+	// 2 - Move only argument type
+	std::unique_ptr<X> ux(new X);
+	ux->set(-3);
+	t = std::thread(setX_move,23,std::move(ux));
+	assert(!ux);
+	t.join();
 }

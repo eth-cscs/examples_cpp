@@ -2,7 +2,6 @@
 #include <cassert>
 #include <iostream>
 
-// TODO: add check for dctor call position
 class Object{
 
 public:
@@ -12,10 +11,6 @@ public:
 	Object(const int i_value):
 		m_value(i_value)
 		{}
-
-	~Object(void){
-		std::cout<<"When is the destructor called?"<<std::endl;
-	}
 
 	int getValue() const { return m_value; }
 
@@ -48,11 +43,11 @@ int main() {
 	assert(up1==false);
 	assert(up1.get()==nullptr);
 
-	// 4 - Fix my Factory function using unique_ptr (check with valgrind)
+	// 4 - Fix my Factory function using unique_ptr
 	const int value(23);
 	std::unique_ptr<Object> up4(makeObject(value));
 
-	// 5 - Create a shared_ptr using same resource
+	// 5 - Create a shared_ptr using same resource (owned by up4)
 	std::shared_ptr<Object> sp1(std::move(up4));
 
 	// 6 - Check ownership

@@ -5,6 +5,7 @@
 #include <list>
 #include <algorithm>
 #include <cassert>
+#include <vector>
 
 namespace graphlib {
 

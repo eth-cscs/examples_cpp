@@ -32,5 +32,5 @@ int main() {
         x.cond1 += 1;
     }
 
-    static_assert(instr_t{10}.oper == 2, "");
+    // static_assert(instr_t{10}.oper == 2, "");
 }

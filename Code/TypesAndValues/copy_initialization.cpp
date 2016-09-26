@@ -24,6 +24,11 @@ A make_A(int a, int b) {
     return A{a,b};
 }
 
+struct C {
+    int a;
+    explicit C(int x): a{x} {std::cout << "hello C\n";}
+};
+
 void testB() {
     B x = 10.;
     SHOW(x.a);
@@ -47,4 +52,5 @@ void testA() {
 int main() {
     testB();
     testA();
+    C a = static_cast<C>(10);
 }

@@ -12,10 +12,6 @@ public:
 		m_value(i_value)
 		{}
 
-	~Object(void){
-		std::cout<<"When is the destructor called?"<<std::endl;
-	}
-
 	int getValue() const { return m_value; }
 
 	void setValue(const int i_value) { m_value = i_value; }
@@ -47,11 +43,11 @@ int main() {
 	assert(up1==?);
 	assert(up1.?==nullptr);
 
-	// 4 - Fix my Factory function using unique_ptr (check with valgrind)
+	// 4 - Fix my Factory function using unique_ptr
 	const int value(23);
-	Object* object = makeObject(value);
+	Object* up4 = makeObject(value);
 
-	// 5 - Create a shared_ptr using same resource
+	// 5 - Create a shared_ptr using same resource (owned by up4)
 	std::shared_ptr<Object> sp1?;
 
 	// 6 - Check ownership

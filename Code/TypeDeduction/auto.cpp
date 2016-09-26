@@ -72,6 +72,8 @@ int main() {
 
     int x = 10;
 
+    SHOW(foo(A(x)));
+    //SHOW(foo(B(x)));
 
     SHOW(foo(A(x)));
     SHOW(foo(B(x)));

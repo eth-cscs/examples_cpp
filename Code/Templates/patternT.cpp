@@ -19,7 +19,7 @@ void foo(X<T,T>) {
 int main() {
     X<int, int> x1;
     X<int, X<int,float>> x2;
-    X<int, X<char,float>> x3;
+    X<int, X<char,X<int,void>>> x3;
 
     foo(x1);
 }

@@ -15,7 +15,6 @@ void f(std::initializer_list<char> const& chars) {
     std::cout << std::endl;
 }
 
-
 class X {
     std::vector<char> v;
 public:

@@ -1,7 +1,7 @@
-#include "show.h"
+#include <iostream>
 #include <memory>
 
-class Object{
+class Object : public std::enable_shared_from_this<Object>{
 
 public:
 	
@@ -15,9 +15,11 @@ public:
 			
 	}
 
-	void setValue(const int i_value) { m_value = i_value; }
-
+	
+	
 	int getValue() const { return m_value; }
+
+	void setValue(const int i_value) { m_value = i_value; }	
 	
 	void modify(const int i_value);
 		
@@ -40,7 +42,7 @@ void workOnObject(const int i_value, const std::shared_ptr<Object> i_object) {
 void Object::modify(const int i_value) {
 
 	// 1 - Add missing code
-	std::shared_ptr<Object> sp(this);
+	std::shared_ptr<Object> sp = shared_from_this();
 	workOnObject(i_value,sp);
 }
 
@@ -63,20 +65,11 @@ void Object::modify(const int i_value) {
 
 int main(){
 
-//#ifdef SMART
-//	std::shared_ptr<Object> object(new Object(23));
-//#else
-	Object* object = new Object(23);
-//#endif
+	std::shared_ptr<Object> object(new Object(23));
 	
 	object->modify(32);
 	
-	SHOW(object->getValue());
-
-//#ifndef SMART
-	delete object;
-//#endif
-	
+	std::cout<<"object->getValue() "<<object->getValue()<<std::endl;;
 }
 
 

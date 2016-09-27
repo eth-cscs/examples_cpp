@@ -1,5 +1,3 @@
-template<typename ... T> struct my_tuple;
-
 template<typename First, typename ... T>
 struct my_tuple<First, T...> : public my_tuple<T ...> {
     using super=my_tuple<T ...>;

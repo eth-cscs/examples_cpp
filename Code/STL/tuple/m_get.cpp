@@ -1,2 +1,2 @@
     template<int Id>
-    constexpr auto get(){return Id==size ? m_value : super::template get<Id>();}
+    constexpr auto get() const {return Id==size ? m_value : super::template get<Id>();}

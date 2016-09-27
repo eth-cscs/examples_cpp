@@ -52,8 +52,8 @@ private:
 int main(){
     // constexpr storage_info<layout_map<4,3,2,1,0>> c_{2,3,4,5,6};
     // static_assert(c_.index(0,0,0,0,1)==1, "error");
-    // static_assert(c_.index(0,0,0,1,0)==2, "error");
-    // static_assert(c_.index(0,0,1,0,0)==3*2, "error");
-    // static_assert(c_.index(0,1,0,0,0)==4*3*2, "error");
-    // static_assert(c_.index(1,0,0,0,0)==5*4*3*2, "error");
+    // static_assert(c_.index(0,0,0,1,0)==6, "error");
+    // static_assert(c_.index(0,0,1,0,0)==5*6, "error");
+    // static_assert(c_.index(0,1,0,0,0)==4*5*6, "error");
+    // static_assert(c_.index(1,0,0,0,0)==3*4*5*6, "error");
 }

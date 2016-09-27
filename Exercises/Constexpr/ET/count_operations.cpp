@@ -105,7 +105,7 @@ int main(int argc , char** argv){
 
     std::cout<<expr(5.)<<"\n";
 
-    /* Modify the code above in order complete the following lines */
+    /* Modify the code above in order for the following to work */
     static_assert(expr.sums() == /*???*/);
     static_assert(expr.mults() == /*???*/);
 }

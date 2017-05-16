@@ -2,10 +2,16 @@
 #include <type_traits>
 
 class POD {
+    //private: // also good
 public:
     int a; /* = 12; // non pod: this is a member initializer */
     int b;
     char c;
+};
+
+class DPOD : public POD {
+public:
+    int d;
 };
 
 class non_POD0 {
@@ -45,9 +51,9 @@ public:
 
 int main () {
     SHOW_BOOL(std::is_pod<POD>::value)
+    SHOW_BOOL(std::is_pod<DPOD>::value)
     SHOW_BOOL(std::is_pod<non_POD0>::value)
     SHOW_BOOL(std::is_pod<non_POD1>::value)
     SHOW_BOOL(std::is_pod<non_POD2>::value)
     SHOW_BOOL(std::is_pod<non_POD3>::value)
 }
-

@@ -49,7 +49,7 @@ struct my_array {
 
 template <typename Array, typename Pred>
 void mark_if(Array & a, unsigned index, Pred const& pred) {
-    elem_t& ref = a[index];
+    decltype(auto)/*elem_t&*/ ref = a[index];
     if (pred(ref.value())) {
         ref.mark() = true;
     }
@@ -66,7 +66,7 @@ int main() {
         decltype(auto) y = x;
         static_assert(std::is_same<decltype(y), int>::value, "");
         decltype(auto) w = z;
-        static_assert(std::is_same<decltype(z), int&>::value, "");
+        static_assert(std::is_same<decltype(w), int&>::value, "");
     }
 
     {

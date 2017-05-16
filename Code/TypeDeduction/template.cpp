@@ -32,6 +32,12 @@ void foo(T a) {
     //a = a+1; //  This line is commented out for the __EXTRA_EXS__ stuff which is not very interesting
 }
 
+template <typename T>
+void foo_r(T& a) {
+    ++a;
+    //a = a+1; //  This line is commented out for the __EXTRA_EXS__ stuff which is not very interesting
+}
+
 #ifdef __EXTRA_EXS__
 // Look at these only as entartainment, if you are entartained by this stuff
 template <typename T>
@@ -60,7 +66,7 @@ int main() {
     foo(y);
     SHOW(x);
 
-    foo<int&>(y);
+    foo<int&>(x);
     SHOW(x);
 
 

@@ -25,7 +25,8 @@ namespace graphlib {
 
      */
     template <typename Graph>
-    std::vector<typename Graph::nodeid_t> bfs(Graph& graph, typename Graph::nodeid_t source) {
+    std::vector<typename Graph::nodeid_t>
+    bfs(Graph& graph, typename Graph::nodeid_t source) {
         if (graph.is_marked()) graph.unmark();
         // the following set the graph in a marked state, since we want to
         // mark individual nodes without having to access them everytime

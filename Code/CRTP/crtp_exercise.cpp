@@ -4,7 +4,7 @@
 template <typename Derived>
 class base {
 
-    int count_process1;
+    mutable int count_process1;
     int count_process2;
 
 private:
@@ -12,12 +12,16 @@ private:
         return *static_cast<Derived*>(this);
     }
 
+    Derived const& derived() const {
+        return *static_cast<const Derived*>(this);
+    }
+
 public:
 
     base() : count_process1(0), count_process2(0) {}
 
     template <typename T>
-    T process1(T const& v) {
+    T process1(T const& v) const {
         ++count_process1;
         derived().process1_impl(v);
     }

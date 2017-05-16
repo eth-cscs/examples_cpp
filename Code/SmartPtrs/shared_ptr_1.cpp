@@ -24,8 +24,6 @@ private:
 	
 };
 
-// TODO: usare show di Mauro
-
 int main(){
 	
 	// 0 - Create managed resource, manager object and first shared pointer
@@ -37,7 +35,7 @@ int main(){
 	// 2 - How many pointers are pointing the same resource?
 	assert(sp1.use_count() == 1);
 	
-	// 3 - Create some other shared pointers for the same resource...
+	// 3 - Create some other shared pointers for the same resource... (use sp1)
 	std::shared_ptr<Object> sp2(sp1); // With copy ctor
 	std::shared_ptr<Object> sp3 = sp1; // With assignement operator
 	std::shared_ptr<Object> sp4(std::move(sp1)); // With move constructor

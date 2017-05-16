@@ -120,9 +120,9 @@ struct merge_sort {
 
     template <typename In, uint Low, uint Hi, typename Void=void>
     struct sort_chunk {
-        static const uint Split = (Hi+Low) >> 1;
+        static const uint Split = (Hi+Low+1) >> 1;
         using type = typename merge< typename sort_chunk<In, Low, Split>::type,
-                                      typename sort_chunk<In, Split+1, Hi>::type>::type;
+                                     typename sort_chunk<In, Split+1, Hi>::type>::type;
     };
 
     template <typename In, uint Low, uint Hi>
@@ -146,8 +146,8 @@ struct merge_sort {
     };
 
     template <typename In, uint Low, uint Hi>
-    struct sort_chunk<In, Low, Hi, typename std::enable_if< (Hi-Low<=0) >::type > {
-        using type = s_vector<typename In::value_type>;
+    struct sort_chunk<In, Low, Hi, typename std::enable_if< (Hi-Low==0) >::type > {
+        using type = s_vector<typename In::value_type, at<In, Low>::value >;
     };
 
     using type = typename sort_chunk<Input, 0, Input::size-1>::type;
@@ -156,7 +156,7 @@ struct merge_sort {
 
 
 int main() {
-    using v = s_vector<int, 6,5,4,3,2,1,7,8>;
+    using v = s_vector<int, 6,5,4,3,2,1,7>;
 
     std::cout << v() << "\n";
 

@@ -10,11 +10,13 @@ void foo(std::string const& x) {
 }
 
 int main() {
-    foo<int>(65);
-    foo<char>(65);
+    foo<int>(65); // Template argument is specified...
+    foo<char>(65); // ... so this call passes a char ('A')
 
     // Template arguments types are deduced!
     foo(3.14159);
 
-    foo("string");
+    foo(std::string("string")); // This goes to the free-standing function that takes a string which is more specialized
+
+    foo<std::string>(std::string("another string")); // This goes to the template implementation of foo, since this syntax explicitly says that a template instantiation is required
 }

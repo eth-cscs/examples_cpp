@@ -18,5 +18,5 @@ int main() {
 
     foo(std::string("string")); // This goes to the free-standing function that takes a string which is more specialized
 
-    foo<std::string>(std::string("another string")); // This goes to the template implementation of foo, since this syntax explicitly says that a template instantiation is required
+    foo<std::string const&>(std::string("another string")); // This goes to the template implementation of foo, since this syntax explicitly says that a template instantiation is required
 }

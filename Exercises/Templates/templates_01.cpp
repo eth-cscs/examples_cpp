@@ -5,10 +5,10 @@
 #include <iostream>
 #include <cassert>
 
-template <typename T>
-T add1(T x) { return x + 1; }
 
-std::string add1(std::string x) { return x + "1"; }
+???? add1(&&& x) { return x + 1; }
+
+???? add1(???? x) { return x + "1"; }
 
 
 int execute(int(*fp)(int), int a) {
@@ -16,7 +16,7 @@ int execute(int(*fp)(int), int a) {
 }
 
 template <typename T>
-T execute(T(*fp)(T), T a) {
+???? execute(????(*fp)(????), ???? a) {
     return fp(a);
 }
 
@@ -41,7 +41,7 @@ int main() {
     std::cout << "As string " << c << "\n";
 
 
-    int (*fp)(int) = add1;
+    int (*fp)(int) = add1 ????;
 
     auto d = execute(fp, 41);
     assert(d == 42);
@@ -49,7 +49,7 @@ int main() {
     std::cout << d << "\n";
 
 
-    float (*flp)(float) = add1;
+    float (*flp)(float) = add1 ????;
 
     auto e = execute(flp, 40.9999f);
     assert(e == 41.9999f);

@@ -7,7 +7,7 @@ Return foo(T x) {
 
 template <typename T=double, int size=10>
 struct my_container {
-    my_container() {std::cout << size << "\n";}
+    my_container() {std::cout << "Primary " << size << "\n";}
 };
 
 template <typename T>

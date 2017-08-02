@@ -23,13 +23,13 @@ public:
     template <typename T>
     T process1(T const& v) const {
         ++count_process1;
-        derived().process1_impl(v);
+        return derived().process1_impl(v);
     }
 
     template <typename T>
     T process2(T const& v) {
         ++count_process2;
-        Derived::process2_impl(v);
+        return Derived::process2_impl(v);
     }
 
     void stats() const {

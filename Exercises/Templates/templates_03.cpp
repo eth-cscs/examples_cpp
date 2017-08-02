@@ -34,15 +34,15 @@ int main() {
     std::cout << " > templates_03 <\n";
 
     X<int, int> x1;
-    assert(x1.name() == "X<T,U>");
+    assert(x1.name() == "????");
 
     X<int, X<int,float>> x2;
-    assert(x2.name() == "X<T, X<T,U>>");
+    assert(x2.name() == "????");
 
     X<int, X<char,X<int,void>>> x3;
-    assert(x3.name() == "X<T,U>");
+    assert(x3.name() == "????");
 
-    assert(foo(x1) == "X<T,T>");
+    assert(foo(x1) == "????");
 
-    assert(foo(x3) == "X<T,U>");
+    assert(foo(x3) == "????");
 }

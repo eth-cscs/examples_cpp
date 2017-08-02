@@ -25,17 +25,21 @@ int main() {
 
     int x = 64;
 
-    int a = add1(x);
+    auto a = add1(x);
+    static_assert(std::is_same<decltype(a), ???? >::value, "");
     assert(a == 65);
 
     std::cout << "As int    " << a << "\n"; // Should print 65
 
-    char b = add1(x);
+    auto b = add1<char>(x);
+    static_assert(std::is_same<decltype(b), ???? >::value, "");
     assert(b == 'A');
 
     std::cout << "As char   " << b << "\n"; // Should print 'A'
 
-    std::string c = add1(std::string("64 + "));
+    std::string s("64 + ");
+    auto c = add1(s);
+    static_assert(std::is_same<decltype(c), ???? >::value, "");
     assert(c == "64 + 1");
 
     std::cout << "As string " << c << "\n";

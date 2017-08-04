@@ -43,7 +43,7 @@ namespace max_type_of {
     template <typename First, typename ???? >
     struct max_type_of< ???? > {
         using type = typename select_first<(sizeof(First) > sizeof(typename max_type_of< ???? >::type)),
-            First, typename max_type_of<>::type
+            First, typename max_type_of< ???? >::type
             >::type;
     };
 

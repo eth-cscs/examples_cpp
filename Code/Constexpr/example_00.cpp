@@ -16,9 +16,9 @@ constexpr int sum2(int id){ // regular recursion
 };
 
 int main(){
-    static_assert(sum<10000>::value > 0, "error");
-    //static_assert(sum2(10000) > 0, "error");
-    // std::cout<<sum2(100000)<<"\n";
+    static_assert(sum<100>::value > 0, "error");
+    static_assert(sum2(100) > 0, "error");
+    std::cout<<sum2(100)<<"\n";
 }
 
 // see :

@@ -17,6 +17,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_DIR})
 add_subdirectory( CRTP )
 #add_subdirectory( CountDigits ) # depends on boost::program_options
 #add_subdirectory( Extents ) # depends on boost::program_options
+add_subdirectory( Constexpr )
 add_subdirectory( Generic )
 add_subdirectory( Lambdas )
 add_subdirectory( Proxy )

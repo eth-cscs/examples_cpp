@@ -1,0 +1,11 @@
+file( GLOB SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cpp )
+foreach( target_s ${SOURCES} )
+    string( REPLACE ".cpp" "" target_n ${target_s} )
+    add_executable( ${target_n} ${target_s} )
+endforeach()
+
+add_subdirectory( iterators )
+add_subdirectory( tuple )
+add_subdirectory( containers )
+add_subdirectory( integer_sequence )
+add_subdirectory( allocator )

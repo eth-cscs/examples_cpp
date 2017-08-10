@@ -18,6 +18,7 @@ add_subdirectory( CRTP )
 #add_subdirectory( CountDigits ) # depends on boost::program_options
 #add_subdirectory( Extents ) # depends on boost::program_options
 add_subdirectory( Constexpr )
+add_subdirectory( EnumClasses )
 add_subdirectory( Generic )
 add_subdirectory( Lambdas )
 add_subdirectory( Proxy )

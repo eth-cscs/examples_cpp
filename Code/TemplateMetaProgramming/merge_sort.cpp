@@ -215,6 +215,7 @@ struct merge_sort {
 
 
 int main() {
+#if __GNUC__ > 5
     using v = s_vector<int, 6,5,4,3,2,1,7>;
 
     std::cout << v() << "\n";
@@ -223,4 +224,5 @@ int main() {
     std::cout << "--------------\n";
 
     std::cout << sv() << "\n";
+#endif
 }

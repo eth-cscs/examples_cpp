@@ -29,12 +29,12 @@ namespace my_library {
 
     template<typename T>
     void do_sum(T const &a, T const &b) {
-        try { // this try is just an example. Exceptions should not be used to report errors
+        try {
             SHOW(detail::sum<T>::add(a, b))
         }
         catch (int ex) {
             switch (ex) {
-                case 666:
+                case 42:
                     std::cout << ex << ": No operator found\n";
             }
         }

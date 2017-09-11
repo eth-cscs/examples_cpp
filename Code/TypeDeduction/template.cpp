@@ -1,30 +1,36 @@
 #include "../show.h"
 #include <functional>
 
-template<typename To, typename From> To convert(From f)
-{
-    return f;
+namespace A {
+    template<typename To, typename From>
+    To convert(From f)
+    {
+        return f;
+    }
+
+    void g(double d)
+    {
+        int i = convert<int>(d);    // calls convert<int, double>(double)
+        char c = convert<char>(d);  // calls convert<char, double>(double)
+        int(*ptr)(float) = convert; // instantiates convert<int, float>(float)
+    }
 }
 
-void g(double d)
-{
-    int i = convert<int>(d);    // calls convert<int, double>(double)
-    char c = convert<char>(d);  // calls convert<char, double>(double)
-    int(*ptr)(float) = convert; // instantiates convert<int, float>(float)
-}
+namespace B {
+    template<typename From, typename To>
+    To convert(From f)
+    {
+        return f;
+    }
 
-template<typename From, typename To> To convert_(From f)
-{
-    return f;
+    void g(double d)
+    {
+        int i = convert<double, int>(d); // now both are needed
+        int j = convert<int, int>(d); // Conversion happens while passing the argument
+        char c = convert<double, char>(d);
+        int(*ptr)(double) = convert; // instantiates convert_<double, int>(duoble)
+    }
 }
-
-void g_(double d)
-{
-    int i = convert_<double, int>(d);
-    char c = convert_<double, char>(d);
-    int(*ptr)(double) = convert_;
-}
-
 
 template <typename T>
 void foo(T a) {
@@ -54,8 +60,8 @@ rw<T> my_ref(T& x) { return rw<T>(x); }
 #endif
 
 int main() {
-    g(2.3);
-    g_(2.3);
+    A::g(2.3);
+    B::g(2.3);
 
     int x = 10;
 

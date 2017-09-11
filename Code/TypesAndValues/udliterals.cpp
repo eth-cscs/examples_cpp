@@ -46,7 +46,6 @@ namespace units {
     struct s : public time {
         using time::time;
 
-        operator s() const { return *this; }
         static std::string name() {return "s";}
         static constexpr double to_fundamental() {return 1;}
     };

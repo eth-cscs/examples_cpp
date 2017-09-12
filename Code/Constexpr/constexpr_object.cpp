@@ -3,7 +3,7 @@
 
 struct my_const_struct{
     template<typename T>
-    constexpr my_const_struct(T t_) : m_i(0){
+    constexpr my_const_struct(T t_) : m_i{} {
         bool cond=std::get<2>(t_)<std::get<1>(t_);
         if(cond)
             m_i = std::get<2>(t_);

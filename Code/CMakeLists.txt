@@ -14,6 +14,7 @@ FILE(GLOB_RECURSE COMMON_INC "*.hpp")
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_DIR})
 
+add_subdirectory( Intro )
 add_subdirectory( CRTP )
 #add_subdirectory( CountDigits ) # depends on boost::program_options
 #add_subdirectory( Extents ) # depends on boost::program_options

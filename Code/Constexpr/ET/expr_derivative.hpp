@@ -11,6 +11,24 @@ namespace expressions{
         return expand_derivative<T1>(arg1)();
     }
 
+    // This specialization is not useful for the functionality, but to
+    // reduce the length of the output expression
+    template <typename T1>
+    constexpr auto
+    D (p<T1>){
+        return c<T1>{1};
+    }
+
+    // This specialization is not useful for the functionality, but to
+    // reduce the length of the output expression
+    template <typename T1>
+    constexpr auto
+    D (c<T1>){
+        return c<T1>{0};
+    }
+
+    // This specialization is made unnecessary by the specialization
+    // of the D function for p<T>
     template<typename T>
     struct expand_derivative<p<T>>{
 
@@ -21,6 +39,8 @@ namespace expressions{
         }
     };
 
+    // This specialization is made unnecessary by the specialization
+    // of the D function for c<T>
     template<typename U>
     struct expand_derivative<c<U>>{
 

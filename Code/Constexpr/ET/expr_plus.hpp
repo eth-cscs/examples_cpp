@@ -56,4 +56,11 @@ namespace expressions{
         return expr_plus<T1, T2 >(arg1, arg2);
     }
 
+    /** sum expression for c<T> */
+    template<typename T1>
+    constexpr expr_plus<c<T1>, c<T1> >
+    operator + (c<T1> arg1, c<T1> arg2){
+        return c<T1>(arg1.value + arg2.value);
+    }
+
 } //namespace expressions

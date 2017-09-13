@@ -6,15 +6,15 @@ struct c {
 
     constexpr c(T x) : value{x} {};
 
-    operator T() const {return value;}
+    constexpr operator T() const {return value;}
 
     template <typename U>
-    T operator()(U) const {
+    constexpr T operator()(U) const {
         return value;
     }
 
     std::string to_string() const {
-        return std::to_string(value);
+        return "{" + std::to_string(value) + "}";
     }
 
     constexpr int sum_ops() const {

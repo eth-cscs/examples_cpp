@@ -1,8 +1,3 @@
-/**
-   Implementing lazy expression templates and automatic differentiation
-   exercice: count the number of sums and multiplications at compile time
-*/
-
 #include "expressions.hpp"
 
 using namespace expressions;

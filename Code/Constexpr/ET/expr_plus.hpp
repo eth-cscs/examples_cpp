@@ -30,7 +30,7 @@ namespace expressions{
     struct expr_plus<c<T>, c<T>> {
         c<T> value;
 
-        constexpr expr_plus(c<T> arg1, c<T> arg2) : value{arg1.value + arg2.value} {std::cout << "\n\nCIAO\n\n";}
+        constexpr expr_plus(c<T> arg1, c<T> arg2) : value{arg1.value + arg2.value} {}
 
         std::string to_string() const {
             return value.to_string();

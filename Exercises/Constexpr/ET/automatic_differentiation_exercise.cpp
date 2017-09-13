@@ -97,7 +97,7 @@ struct expand_derivative<expr_plus<T1, T2>> {
 
   constexpr expand_derivative(expr_plus<T1, T2> arg) : arg1(arg) {}
 
-  constexpr auto operator()() { return D(arg1.arg1) + D(arg1.arg2); }
+  auto operator()() const { return D(arg1.arg1) + D(arg1.arg2); }
 };
 
 template <typename T1, typename T2>

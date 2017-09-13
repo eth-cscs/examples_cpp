@@ -5,19 +5,18 @@ namespace expressions {
 
 template <typename T1> struct expand_derivative;
 
-    template <typename T1>
-    constexpr auto D(T1 arg1) -> decltype(expand_derivative<T1>(arg1)())
-    {
-        return expand_derivative<T1>(arg1)();
-    }
+template <typename T1>
+constexpr auto D(T1 arg1) -> decltype(expand_derivative<T1>(arg1)()) {
+  return expand_derivative<T1>(arg1)();
+}
 
 // This specialization is not useful for the functionality, but to
 // reduce the length of the output expression
-    template <typename T1> constexpr c<T1> D(p<T1>) { return c<T1>{1}; }
+template <typename T1> constexpr c<T1> D(p<T1>) { return c<T1>{1}; }
 
 // This specialization is not useful for the functionality, but to
 // reduce the length of the output expression
-    template <typename T1> constexpr c<T1> D(c<T1>) { return c<T1>{0}; }
+template <typename T1> constexpr c<T1> D(c<T1>) { return c<T1>{0}; }
 
 // This specialization is made unnecessary by the specialization
 // of the D function for p<T>
@@ -44,7 +43,9 @@ struct expand_derivative<expr_plus<T1, T2>> {
 
   constexpr expand_derivative(expr_plus<T1, T2> arg) : arg1(arg) {}
 
-  constexpr auto operator()() const -> decltype(D(arg1.arg1) + D(arg1.arg2)) { return D(arg1.arg1) + D(arg1.arg2); }
+  constexpr auto operator()() const -> decltype(D(arg1.arg1) + D(arg1.arg2)) {
+    return D(arg1.arg1) + D(arg1.arg2);
+  }
 };
 
 // This specialization is not useful for the functionality, but to
@@ -56,7 +57,9 @@ struct expand_derivative<expr_plus<T1, c<T>>> {
 
   constexpr expand_derivative(expr_plus<T1, c<T>> arg) : arg1(arg) {}
 
-  constexpr auto operator()() const -> decltype (D(arg1.arg1)) { return D(arg1.arg1); }
+  constexpr auto operator()() const -> decltype(D(arg1.arg1)) {
+    return D(arg1.arg1);
+  }
 };
 
 // This specialization is not useful for the functionality, but to
@@ -68,7 +71,9 @@ struct expand_derivative<expr_plus<c<T>, T2>> {
 
   constexpr expand_derivative(expr_plus<c<T>, T2> arg) : arg1(arg) {}
 
-  constexpr auto operator()() const -> decltype(D(arg1.arg2)) { return D(arg1.arg2); }
+  constexpr auto operator()() const -> decltype(D(arg1.arg2)) {
+    return D(arg1.arg2);
+  }
 };
 
 // This specialization is not useful for the functionality, but to
@@ -87,7 +92,8 @@ struct expand_derivative<expr_times<T1, T2>> {
 
   constexpr expand_derivative(expr_times<T1, T2> arg1) : arg1(arg1) {}
 
-  constexpr auto operator()() const -> decltype(D(arg1.arg1) * arg1.arg2 + arg1.arg1 * D(arg1.arg2)) {
+  constexpr auto operator()() const
+      -> decltype(D(arg1.arg1) * arg1.arg2 + arg1.arg1 * D(arg1.arg2)) {
     return D(arg1.arg1) * arg1.arg2 + arg1.arg1 * D(arg1.arg2);
   }
 };
@@ -101,7 +107,9 @@ struct expand_derivative<expr_times<T1, c<T>>> {
 
   constexpr expand_derivative(expr_times<T1, c<T>> arg1) : arg1(arg1) {}
 
-  constexpr auto operator()() const -> decltype(D(arg1.arg1) * arg1.arg2) { return D(arg1.arg1) * arg1.arg2; }
+  constexpr auto operator()() const -> decltype(D(arg1.arg1) * arg1.arg2) {
+    return D(arg1.arg1) * arg1.arg2;
+  }
 };
 
 // This specialization is not useful for the functionality, but to
@@ -113,7 +121,9 @@ struct expand_derivative<expr_times<c<T>, T2>> {
 
   constexpr expand_derivative(expr_times<c<T>, T2> arg1) : arg1(arg1) {}
 
-  constexpr auto operator()() const -> decltype(arg1.arg1 * D(arg1.arg2)) { return arg1.arg1 * D(arg1.arg2); }
+  constexpr auto operator()() const -> decltype(arg1.arg1 * D(arg1.arg2)) {
+    return arg1.arg1 * D(arg1.arg2);
+  }
 };
 
 // This specialization is not useful for the functionality, but to

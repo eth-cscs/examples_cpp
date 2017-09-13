@@ -6,7 +6,8 @@ template <typename T1, typename T2> struct expr_times {
 
   constexpr expr_times(T1 arg1, T2 arg2) : arg1(arg1), arg2(arg2) {}
 
-    template <typename T> constexpr auto operator()(T t_) const -> decltype(arg1(t_) * arg2(t_)) {
+  template <typename T>
+  constexpr auto operator()(T t_) const -> decltype(arg1(t_) * arg2(t_)) {
     return arg1(t_) * arg2(t_);
   }
 

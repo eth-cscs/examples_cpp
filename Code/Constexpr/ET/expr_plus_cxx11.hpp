@@ -11,10 +11,10 @@ template <typename T1, typename T2> struct expr_plus {
            std::string(")");
   }
 
-    template <typename T> constexpr auto operator()(T t_) const -> decltype(arg1(t_) + arg2(t_))
-    {
-        return arg1(t_) + arg2(t_);
-    }
+  template <typename T>
+  constexpr auto operator()(T t_) const -> decltype(arg1(t_) + arg2(t_)) {
+    return arg1(t_) + arg2(t_);
+  }
 
   constexpr int sum_ops() const { return arg1.sum_ops() + arg2.sum_ops() + 1; }
   constexpr int mult_ops() const { return arg1.mult_ops() + arg2.mult_ops(); }
@@ -29,9 +29,7 @@ template <typename T> struct expr_plus<c<T>, c<T>> {
 
   std::string to_string() const { return value.to_string(); }
 
-  template <typename X> constexpr T operator()(X) const {
-    return value.value;
-  }
+  template <typename X> constexpr T operator()(X) const { return value.value; }
 
   constexpr int sum_ops() const { return 0; }
   constexpr int mult_ops() const { return 0; }

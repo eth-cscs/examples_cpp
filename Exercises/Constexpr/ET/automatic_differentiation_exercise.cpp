@@ -50,9 +50,9 @@ template <typename U> struct p {
 
   using value_type = U;
 
-    p() {}
+  p() {}
 
-  template <typename T> constexpr T operator()(T t_) const { return t_; }
+  template <typename T> constexpr T operator()(T t_) { return t_; }
   std::string to_string() const { return std::string(" x "); }
 };
 

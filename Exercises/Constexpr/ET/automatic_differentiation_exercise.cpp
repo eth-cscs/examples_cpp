@@ -130,6 +130,12 @@ int main() {
   static_assert(D(expr)(4) == 152, "error");
   static_assert(D(D(expr))(4) == 74, "error");
 
+  // Can you make the following to work?
+  // You can start with regular runtime calls, and then
+  // make them constexpr (much easier than typical TMP
+  // where the runtime and compile time branches are
+  // completely different!
+
   //static_assert(expr.sum_ops() == 1, "error");
   //static_assert(expr).sum_mult() == 4, "error");
 }

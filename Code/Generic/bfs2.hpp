@@ -10,9 +10,6 @@ namespace graphlib {
     /** What are the requirements on the Graph type?
 
         member functions:
-        bool is_marked()
-        /unspecified/ unmark()
-        /unspecified/ set_as_marked()
         /something that can mark a node/ operator[nodeid_t]
 
         member types:
@@ -20,9 +17,6 @@ namespace graphlib {
 
         nodes member functions:
         nodeid_t id()
-        bool is_marked()
-        /unspecified/ mark();
-
      */
     template <typename Graph, typename Marker, typename IsMarked>
     std::vector<typename Graph::nodeid_t>

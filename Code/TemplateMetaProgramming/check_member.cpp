@@ -16,7 +16,7 @@ struct has_foo {
 };
 
 template <typename T>
-struct has_foo<T, void_t<decltype(T{}.foo(int{}, int{}))> > {
+struct has_foo<T, void_t<decltype(T{}.foo(std::declval<int>(), std::declval<int>()))> > {
     static constexpr bool value = true;
 };
 

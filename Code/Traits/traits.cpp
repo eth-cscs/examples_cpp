@@ -10,7 +10,7 @@ struct A {
 
     value_type value;
 
-    A(value_type v) : value{v} {}
+    constexpr A(value_type v) : value{v} {}
 
     static std::string left_separator() {return " (";}
     static std::string right_separator() {return ") ";}
@@ -36,7 +36,7 @@ struct my_traits {
     using value_type = typename T::value_type;
 
 
-    static value_type value_of(T const& f)
+    constexpr static value_type value_of(T const& f)
     {
         return f.value;
     }
@@ -53,7 +53,7 @@ namespace print_impl {
     }
 
     template <typename Traits, typename ObjectType>
-    typename std::enable_if<! Traits::has_separators, std::string>::type
+    typename std::enable_if<not Traits::has_separators, std::string>::type
     get_left_separator(ObjectType const&) {
         return Traits::default_separator();
     }

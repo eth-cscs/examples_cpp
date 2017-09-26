@@ -21,7 +21,7 @@ namespace runtime {
         {}
 
         virtual void print_me() const {
-            std::cout << "Derived >runtime::derived_i"
+            std::cout << "VIRTUAL::derived_i"
                       << "< value: "
                       << m_value
                       << std::endl;
@@ -44,7 +44,7 @@ namespace runtime {
         {}
 
         virtual void print_me() const {
-            std::cout << "Derived >runtime::derived_c"
+            std::cout << "VIRTUAL::derived_c"
                       << "< value: ("
                       << m_a << " + i" << m_b << ")"
                       << std::endl;
@@ -99,7 +99,7 @@ namespace compiletime {
         {}
 
         void print_me_() const {
-            std::cout << "Derived >compiletime::derived_i"
+            std::cout << "CRTP::derived_i"
                       << "< value: "
                       << m_value
                       << std::endl;
@@ -122,7 +122,7 @@ namespace compiletime {
         {}
 
         void print_me_() const {
-            std::cout << "Derived >compiletime::derived_c"
+            std::cout << "CRTP::derived_c"
                       << "< value: ("
                       << m_a << " + i" << m_b << ")"
                       << std::endl;
@@ -169,7 +169,7 @@ int main(int argc, char** argv) {
 
 
     {
-        runtime::derived_i* c = new runtime::derived_i( 666 );
+        runtime::derived_i* c = new runtime::derived_i( 42 );
 
         c->print_me();
 
@@ -181,7 +181,7 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
 
     {
-        compiletime::derived_i *d = new compiletime::derived_i( 666);
+        compiletime::derived_i *d = new compiletime::derived_i( 42 );
 
         d->print_me();
 
@@ -191,7 +191,7 @@ int main(int argc, char** argv) {
         d->print_me();
 
 
-        std::cout << "\nCall the native method od derived_i\n";
+        std::cout << "\nCall the native member of derived_i\n";
         d->print_me();
 
         compiletime::run_(*d, N);
@@ -223,7 +223,7 @@ int main(int argc, char** argv) {
 
         c->print_me();
 
-        std::cout << "\nCall the native method od derived_c\n";
+        std::cout << "\nCall the native member of derived_c\n";
         c->print_me();
 
         compiletime::run_(*c, N);

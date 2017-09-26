@@ -3,5 +3,3 @@ foreach( target_s ${SOURCES} )
     string( REPLACE ".cpp" "" target_n ${target_s} )
     add_executable( ${target_n} ${target_s} )
 endforeach()
-
-add_subdirectory(ET)

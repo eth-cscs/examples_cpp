@@ -15,19 +15,10 @@ class MyType {
   
 public:
   
-  MyType()
-    :m_number_uncaught(std::uncaught_exceptions())
-  {
-    std::cout<<"Number uncaught exceptions - MyType ctor: "<<m_number_uncaught<<std::endl;
-  }
 
   ~MyType() noexcept(false) 
   {
-    std::cout<<"MyType dctor"<<std::endl;
-
-    int number_uncaught_check = std::uncaught_exceptions();
-    std::cout<<"Number uncaught exceptions - MyType ctor: "<<number_uncaught_check<<std::endl;
-    if(number_uncaught_check == m_number_uncaught){
+    if(???)
       freeResources();
     }
     else {
@@ -47,7 +38,6 @@ private:
   }
 
   // 2. Hint: you need a data member...
-  int m_number_uncaught;
 
 };
 

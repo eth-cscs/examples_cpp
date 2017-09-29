@@ -35,7 +35,7 @@ struct Y {
 };
 
 
-extern int test() {
+extern void test() {
     short_array_3 x{1,2,3};
     short_array_3 y = {3,2,1};
 

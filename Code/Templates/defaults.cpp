@@ -24,7 +24,7 @@ int main() {
 
     // For functions:
     SHOW(foo(65));
-    SHOW((foo<int, int>(65)))
+    SHOW((foo<int, int>(65.3)))
 
     // For classes
     my_container<> x; // a my_container of doubles

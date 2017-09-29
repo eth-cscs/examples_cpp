@@ -141,6 +141,7 @@ namespace graphlib {
                         _index++;
                         while (_index < _i_proxy.total_length() && !_i_proxy[_index])
                             ++_index;
+                        return *this;
                     }
                     bool operator!=(iterator const b) const {
                         return (_index != b._index);
@@ -195,7 +196,7 @@ namespace graphlib {
                 return neighbor_proxy(*this).end();
             }
 
-            bool mark() {
+            void mark() {
                 _p_graph.mark_(_index);
             }
 
@@ -209,11 +210,11 @@ namespace graphlib {
             }
         protected:
             bool operator[](int i) const {
-                _p_graph._data[_index*total_length()+i].is_neighbor();
+                return _p_graph._data[_index*total_length()+i].is_neighbor();
             }
-                              }; // class row_proxy
+        }; // class row_proxy
 
-        friend class am_graph::row_proxy;
+    friend class am_graph::row_proxy;
     public:
         am_graph(std::initializer_list<nodeid_t> const& list)
             : _data(list.size()*list.size())

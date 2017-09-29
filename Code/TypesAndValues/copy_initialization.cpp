@@ -24,6 +24,10 @@ A make_A(int a, int b) {
     return A{a,b};
 }
 
+void take_B(B x) {
+    SHOW_PREFIX("In take_B I receive: ", x.a);
+}
+
 struct C {
     int a;
     explicit C(int x): a{x} {std::cout << "hello C\n";}
@@ -32,6 +36,8 @@ struct C {
 void testB() {
     B x = 10.;
     SHOW(x.a);
+
+    take_B(42);
 
     B y = {34,45}; // calling B(int, int)
     SHOW(make_B(45,67).a);

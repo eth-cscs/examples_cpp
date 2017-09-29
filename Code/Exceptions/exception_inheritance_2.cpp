@@ -46,6 +46,7 @@ int main() {
     std::cout<<"Zerodivide exc caught"<<std::endl;
     e.print_message();
   }
+  std::cout<<std::endl;
 
   try{
     int div = divide(8,0);
@@ -57,6 +58,19 @@ int main() {
   catch(Zerodivide e) {
     std::cout<<"Zerodivide exc caught"<<std::endl;
     e.print_message();
+  }
+  std::cout<<std::endl;
+
+  try{
+    int div = divide(8,0);
+  }
+  catch(Zerodivide e) {
+    std::cout<<"Zerodivide exc caught"<<std::endl;
+    e.print_message();
+  }
+  catch(Matherr e) {
+    std::cout<<"Matherr exc caught"<<std::endl;
+    e.print_message();    
   }
 
 

@@ -15,9 +15,8 @@ class MyType {
 
 public:
 
-  ~MyType() // noexcept(false) 
+  ~MyType() noexcept(false) 
   {
-    std::cout<<"MyType dctor"<<std::endl;
     freeResources();
   }
 

@@ -4,6 +4,7 @@
 
 #define PRINT_OPERATION
 
+// 3. TODO: optimize my code with exception specification
 struct MyObject {
 
   MyObject(void)
@@ -24,8 +25,7 @@ struct MyObject {
 #endif
   }
   
-  // 3. Try to add/remove the noexcept specifier
-  MyObject(MyObject&& i_object) //noexcept
+  MyObject(MyObject&& i_object)
     :m_data(std::move(i_object.m_data))
   {
 #ifdef PRINT_OPERATION

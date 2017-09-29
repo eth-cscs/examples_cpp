@@ -22,7 +22,7 @@ public:
   Vector(int i_data_size)
     :m_data_size(i_data_size)
   {
-    
+
     //    m_meta_data = new int[3];
     m_meta_data = std::unique_ptr<int>(new int[3]);
 
@@ -32,17 +32,12 @@ public:
   }
   
   ~Vector() {
-
-    std::cout<<"Call to dctor. Data size: "<<m_data_size<<std::endl;
-    //   if(m_meta_data) {
-    //  delete [] m_meta_data;
-    //  m_meta_data = nullptr;
-    //}
-
   }
+
+  Vector(const Vector&) = delete;
+  Vector(Vector&&) = delete;
   
 private:
-  //  int* m_meta_data;
   std::unique_ptr<int> m_meta_data;
   int m_data_size;
 

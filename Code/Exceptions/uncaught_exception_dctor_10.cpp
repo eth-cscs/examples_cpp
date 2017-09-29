@@ -60,8 +60,6 @@ public:
 
 void f() {
 
-#if 0
-
   try {
     
     MyType myType;
@@ -74,7 +72,6 @@ void f() {
     std::cout<<"Error: "<<e.m_message<<std::endl;
   }
 
-#else
 
   try {
 
@@ -86,8 +83,6 @@ void f() {
     std::cout<<"Exception caught in f()"<<std::endl; 
     std::cout<<"Error: "<<e.m_message<<std::endl;
   }
-
-#endif
 
 }
 

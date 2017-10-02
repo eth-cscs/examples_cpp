@@ -1,6 +1,10 @@
 #include <tuple>
 #include <iostream>
 
+#if __GNUG__  && __GNUC__ < 5
+#pragma message("This example require GCC > 5.4, sorry\n")
+int main() {}
+#else
 struct my_const_struct{
     template<typename T>
     constexpr my_const_struct(T t_) : m_i{} {
@@ -21,3 +25,4 @@ int main(){
     std::cout<<my_struct.get()<<"\n";
     static_assert(my_struct.get()==2, "error");
 }
+#endif

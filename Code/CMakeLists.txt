@@ -4,7 +4,7 @@ project( examples_cpp )
 enable_language( CXX )
 
 
-find_package( Boost COMPONENTS program_options REQUIRED )
+# Needed only by CountDigits, which is turned off -- find_package( Boost COMPONENTS program_options REQUIRED )
 
 include_directories( SYSTEM ${Boost_INCLUDE_DIRS} )
 link_directories( ${Boost_LIBRARY_DIRS} )
@@ -18,7 +18,15 @@ add_subdirectory( Intro )
 add_subdirectory( CRTP )
 #add_subdirectory( CountDigits ) # depends on boost::program_options
 #add_subdirectory( Extents ) # depends on boost::program_options
-add_subdirectory( Constexpr )
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "5.0")
+    add_subdirectory( Constexpr )
+  else()
+    message("Constexpr examples not supported by your compiler")
+  endif()
+else()
+  add_subdirectory( Constexpr )
+endif()
 add_subdirectory( EnumClasses )
 add_subdirectory( Generic )
 add_subdirectory( Lambdas )

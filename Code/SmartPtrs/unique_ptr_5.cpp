@@ -40,7 +40,6 @@ int main() {
 	std::unique_ptr<Object> up3 = std::move(up2);
 
 	// 3 - Check ownership
-	assert(static_cast<bool>(up1)==false);
 	assert(up1.get()==nullptr);
 
 	// 4 - Fix my Factory function using unique_ptr

@@ -7,7 +7,7 @@ class Object{
 public:
 
 	Object(void) = default;
-	
+
 	Object(const int i_value):
 		m_value(i_value)
 		{}
@@ -40,7 +40,6 @@ int main() {
 	std::unique_ptr<Object> up3 = ?(up2);
 
 	// 3 - Check ownership
-	assert(up1==?);
 	assert(up1.?==nullptr);
 
 	// 4 - Fix my Factory function using unique_ptr
@@ -56,5 +55,5 @@ int main() {
 
 	// 7 - Create a shared_ptr using makeObject
 	std::shared_ptr<Object> sp2(?);
-	
-}	
+
+}

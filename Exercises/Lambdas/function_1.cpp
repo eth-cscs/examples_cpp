@@ -37,7 +37,7 @@ int main() {
 
     using namespace std::placeholders;
 
-    // Re-targeting to basr using find
+    // Re-targeting to bar using bind (look at assert)
     f = std::bind(bar, ???? );
 
     assert(f(3,4) == (float)(3+4));

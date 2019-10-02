@@ -35,6 +35,9 @@ struct movable {
     }
 
     int size() const {return s;}
+
+    int& operator[](int i) { if (pv) return pv[i]; else throw std::runtime_error("Invalid access"); }
+    int operator[](int i) const { if (pv) return pv[i]; else throw std::runtime_error("Invalid access"); }
 };
 
 int main() {
@@ -46,4 +49,18 @@ int main() {
     movable u(std::move(z)); // move constructor
     SHOW(z.size()); // prints 0
     SHOW(u.size()); // prints 200
+
+
+    try {
+        z[0] = 42;
+    }
+    catch (std::runtime_error const& e) {
+        std::cout << e.what() << " in writing \n";
+    }
+    try {
+        std::cout << u[0] << "\n";
+    }
+    catch (std::runtime_error const& e) {
+        std::cout << e.what() << " in reading \n";
+    }
 }

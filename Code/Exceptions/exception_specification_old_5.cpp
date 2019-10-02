@@ -5,12 +5,12 @@ struct ExceptionTypeA {};
 struct ExceptionTypeB {};
 struct ExceptionTypeC : public ExceptionTypeB {};
 
-void f1(void) throw (ExceptionTypeA,ExceptionTypeB)
+void f1(void) //throw (ExceptionTypeA,ExceptionTypeB)
 {
   throw ExceptionTypeC();
 }
 
-void f2(void) throw ()
+void f2(void) //throw ()
 {
   throw std::exception();
 }

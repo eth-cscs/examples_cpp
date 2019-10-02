@@ -8,7 +8,7 @@ enable_language( CXX )
 
 include_directories( SYSTEM ${Boost_INCLUDE_DIRS} )
 link_directories( ${Boost_LIBRARY_DIRS} )
-set (CMAKE_CXX_FLAGS "-std=c++14")
+set (CMAKE_CXX_FLAGS "-std=c++17")
 
 FILE(GLOB_RECURSE COMMON_INC "*.hpp")
 

@@ -1,9 +1,11 @@
-/* 1 */ int    foo(int, int) {return 0;}
+#include <iostream>
 
-/* 2 */ double foo(int, float) {return 0.;}
+/* 1 */ int    foo(int, int) {std::cout << __PRETTY_FUNCTION__ << "\n"; return 0;}
+
+/* 2 */ double foo(int, float) {std::cout << __PRETTY_FUNCTION__ << "\n"; return 0.;}
 
 template <typename T>
-/* 3 */ char foo(T, int) {return '\n';}
+/* 3 */ char foo(T, int) {std::cout << __PRETTY_FUNCTION__ << "\n"; return '\n';}
 
 int main() {
     /* A */ foo(3,4);

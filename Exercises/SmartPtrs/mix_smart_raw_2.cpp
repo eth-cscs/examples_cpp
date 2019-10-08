@@ -6,24 +6,23 @@ class Object{
 public:
 
 	Object() = default;
-	
+
 	Object(const int i_value):
 		m_value(i_value)
 		{}
-	
+
 	int getValue() const { return m_value; }
 
-	void setValue(const int i_value) { m_value = i_value; }	
-	
+	void setValue(const int i_value) { m_value = i_value; }
+
 private:
-	
+
 	int m_value;
-	
+
 };
 
-
 int main(){
-	
+
 	// 0 - Create managed resource, manager object and first shared pointer
 	std::shared_ptr<Object> sp1(new Object(23));
 
@@ -43,9 +42,6 @@ int main(){
 
 	// 5 - Create a shared_ptr to array
 	std::shared_ptr<Object> sp4(new Object[10]);
-	
+
 	// Find the bugs!
 }
-
-
-

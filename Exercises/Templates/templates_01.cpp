@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cassert>
 
-
+template <???>
 ???? add1(&&& x) { return x + 1; }
 
 ???? add1(???? x) { return x + "1"; }
@@ -26,7 +26,7 @@ int main() {
     int x = 64;
 
     auto a = add1(x);
-    static_assert(std::is_same<decltype(a), ???? >::value, "");
+    static_assert(std::is_same<decltype(a), int >::value, "");
     assert(a == 65);
 
     std::cout << "As int    " << a << "\n"; // Should print 65

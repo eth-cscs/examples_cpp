@@ -71,5 +71,6 @@ int main() {
     SHOW_BOOL(check_align(ip, 128));
     SHOW_BOOL(check_align(ip, 64));
     SHOW_BOOL(check_align(ip, 32));
+    SHOW_BOOL(check_align(ip, sizeof(int)));
 
 }

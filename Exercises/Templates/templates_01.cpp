@@ -20,6 +20,13 @@ template <typename T>
     return fp(a);
 }
 
+/*
+// Try to get the non template function to work with execute
+template <typename T, typename X, typename U>
+T execute(T(*fp)(X), U a) {
+    return fp(a);
+}
+*/
 
 int main() {
 
@@ -60,4 +67,10 @@ int main() {
 
     std::cout << e << "\n";
 
+    // Try to get the non template function to work with execute
+    // std::string (*fstr)(std::string const&) = add1;
+
+    // auto f = execute(fstr, std::string{"ciao"});
+
+    // std::cout << f << "\n";
 }

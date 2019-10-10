@@ -30,3 +30,4 @@ int main() {
         mov     rax, QWORD PTR [rbp-8]
         mov     rdi, rax
         call    f(pair<int, int>)
+*/

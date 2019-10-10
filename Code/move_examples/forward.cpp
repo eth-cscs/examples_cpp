@@ -18,7 +18,7 @@ void foo1(T x) {
 // void foo(int&);
 // void foo(int&);
 
-int test() {
+void test() {
     int i = 19;
     foo(i);
     SHOW(i);
@@ -27,7 +27,7 @@ int test() {
     foo(42);
 }
 
-int test1() {
+void test1() {
     int i = 19;
     foo1(i);
     SHOW(i);

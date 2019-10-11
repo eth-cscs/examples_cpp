@@ -9,8 +9,11 @@ int main(){
     test t2_(10);
     constexpr bool check_t1_ = (noexcept(t1_.get()));
     constexpr bool check_t2_ = (noexcept(t2_.get()));
-#if __GNUC__ < 6
+
+#ifndef __clang__
+#if __GNUG__ < 6
     static_assert(check_t1_==true, "error");
     static_assert(check_t2_==false, "error");
+#endif
 #endif
 }

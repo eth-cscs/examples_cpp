@@ -10,7 +10,7 @@ namespace step1 {
         my_container(std::size_t s) : data(s) {}
     };
 
-    int test() {
+    void test() {
         my_container my_vec(42);
     }
 } // namespace step1
@@ -26,7 +26,7 @@ namespace step2 {
         my_container(std::size_t s) : data(s) {}
     };
 
-    int test() {
+    void test() {
         my_container<int> my_vec(42);
     }
 } // namespace step2
@@ -41,7 +41,7 @@ namespace step3 {
         my_container(std::size_t s) : data(s) {}
     };
 
-    int test() {
+    void test() {
         my_container<int> my_c1(42);
         my_container<int, std::allocator<int>> my_c2(42);
         // my_container<int, std::allocator<double>> my_c2(42);
@@ -59,7 +59,7 @@ namespace step4 {
         my_container(std::size_t s) : data(s) {}
     };
 
-    int test() {
+    void test() {
         my_container<int> my_c1(42);
         my_container<int, std::allocator> my_c2(42);
     }
@@ -75,7 +75,7 @@ namespace step5 {
         my_container(std::size_t s) : data(s) {}
     };
 
-    int test() {
+    void test() {
         my_container<std::vector<int>> my_c1(42);
         my_container<std::vector<int, std::allocator<int>>> my_c2(42);
     }
@@ -93,7 +93,7 @@ namespace step6 {
         my_container(std::size_t s) : data(s) {}
     };
 
-    int test() {
+    void test() {
         my_container<int> my_c1(42);
         my_container<int, std::vector> my_c2(42);
         my_container<int, std::vector, std::allocator> my_c3(42);

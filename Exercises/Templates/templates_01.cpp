@@ -5,8 +5,8 @@
 #include <iostream>
 #include <cassert>
 
-
-???? add1(&&& x) { return x + 1; }
+template <???>
+???? add1(??? x) { return x + 1; }
 
 ???? add1(???? x) { return x + "1"; }
 
@@ -20,13 +20,20 @@ template <typename T>
     return fp(a);
 }
 
+/*
+// Try to get the non template function to work with execute
+template <typename T, typename X, typename U>
+T execute(T(*fp)(X), U a) {
+    return fp(a);
+}
+*/
 
 int main() {
 
     int x = 64;
 
     auto a = add1(x);
-    static_assert(std::is_same<decltype(a), ???? >::value, "");
+    static_assert(std::is_same<decltype(a), int >::value, "");
     assert(a == 65);
 
     std::cout << "As int    " << a << "\n"; // Should print 65
@@ -60,4 +67,10 @@ int main() {
 
     std::cout << e << "\n";
 
+    // Try to get the non template function to work with execute
+    // std::string (*fstr)(std::string const&) = add1;
+
+    // auto f = execute(fstr, std::string{"ciao"});
+
+    // std::cout << f << "\n";
 }

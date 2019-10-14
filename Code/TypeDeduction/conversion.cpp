@@ -44,7 +44,7 @@ int main() {
     f(i);    // warning
 
     char c1 = 32, c2 = 33;
-    B x{c1+c2};
+    B x(c1+c2); // {} would not work!
     {
         A y = static_cast<B>(C{});
     }

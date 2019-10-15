@@ -1,0 +1,6 @@
+[submodule "Code/tinysimd/import/gbench"]
+	path = Code/tinysimd/import/gbench
+	url = https://github.com/google/benchmark
+[submodule "Code/tinysimd/import/gtest"]
+	path = Code/tinysimd/import/gtest
+	url = https://github.com/google/googletest

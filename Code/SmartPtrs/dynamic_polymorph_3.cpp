@@ -1,31 +1,25 @@
 #include <memory>
 #include <iostream>
+#include <string>
+#include <cassert>
 
 struct Base{
 
-	virtual void f(void) const { std::cout<<"Call base method"<<std::endl; }
-
-	virtual ~Base(){
-		std::cout<<"Call base dtor"<<std::endl;
-	}
-
+	virtual std::string f(void) const { return "Base"; }
 };
 
 
 struct Derived : public Base {
 
-	void f(void) const { std::cout<<"Call derived method"<<std::endl; }
-
-	~Derived(){
-		std::cout<<"Call derived dtor"<<std::endl;
-	}
-
+    std::string f(void) const { return "Derived"; }
 };
 
 
 int main(){
 
+	// 0 - Update using only std::shared_ptr
 	std::shared_ptr<Base> sp_base(new Derived);
-	sp_base->f();
 
+	// 1 - What is the called f() method?
+	assert(sp_base->f() == "Derived");
 }

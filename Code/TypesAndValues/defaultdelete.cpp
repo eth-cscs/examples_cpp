@@ -13,6 +13,12 @@ struct X1 {
 
     X1(X1 const& other) = default;
     X1& operator=(X1&& other) = delete;
+
+    int get() const {return a;}
+};
+
+struct X2: public X1 {
+    int get() const = delete;
 };
 
 struct Y {
@@ -31,6 +37,8 @@ int main() {
 
     X1 y1(x1);
     X1 y2(std::move(x1));
+
+    X2 x2;
 
     Y u{};
     Y w(u);

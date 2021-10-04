@@ -77,9 +77,10 @@ int main() {
     std::cout << "---------------------------------------\n";
     std::function<int(int,int)> member1 = A::member;
     to_run = (member1.target < int(*)(int,int)>());
+    assert(to_run);
     run(*to_run);
     std::cout << "---------------------------------------\n";
-    A a(666);
+    A a(42);
     std::function<int(A*,int,int)> member2 = &A::member2;
     SHOW(member2(&a, 3,4));
     std::cout << "---------------------------------------\n";

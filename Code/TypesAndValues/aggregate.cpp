@@ -60,7 +60,7 @@ extern void test() {
 
     static_assert(two_arrays{{3,2,1},{5,4,3,2,1}, 324}.x == 324, "");
     static_assert(two_arrays{{3,2,1},{5,4,3,2,1}, 324}._5[1] == 4, "");
-    //    static_assert(two_arrays{{3,2,1},{5,4,3,2,1}, 324}._3.data3[0] == 3, "");
+    static_assert(two_arrays{{3,2,1},{5,4,3,2,1}, 324}._3.data3[0] == 3, "");
 
     short_array_5 z[2] = {{6,6,6,6,6},{3,3,3,4,4}};
     SHOW(z[1][3]);
